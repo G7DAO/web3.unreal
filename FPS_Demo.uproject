@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{C1E9B2EF-47A8-8E71-8C8E-E791E11FC070}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "FPS_Demo",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

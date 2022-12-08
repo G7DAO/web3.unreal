@@ -1,0 +1,34 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "2.1.1",
+	"FriendlyName": "Fetch",
+	"Description": "The Fetch API inspired HTTP client for Unreal Engine. Supports both Blueprints & C++.",
+	"Category": "Network",
+	"CreatedBy": "Arunoda Susiripala",
+	"CreatedByURL": "https://gdi4k.com",
+	"DocsURL": "https://github.com/GDi4k/unreal-fetch",
+	"SupportURL": "https://github.com/GDi4k/unreal-fetch",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"EngineVersion": "4.27.0",
+	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/e8098c9d0b414ad4924296c8a4495668",
+	"Modules": [
+		{
+			"Name": "Fetch",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Win32",
+				"Mac",
+				"IOS",
+				"Android",
+				"PS4",
+				"XboxOne"
+			]
+		}
+	]
+}
