@@ -20,6 +20,27 @@ Follow these instructions to install the web3.unreal plugin:
 * Start your app & it will ask to compile the plugin. Proceed with that.
 * You might need to [setup Visual Studio](https://docs.unrealengine.com/en-US/ProductionPipelines/DevelopmentSetup/VisualStudioSetup/index.html) for Unreal Engine.
 
+## Contributing
+Follow these instructions to start contributing to web3.unreal:
+* Clone the repo
+* Right click `FPS_Demo.uproject`, click `Switch Unreal Engine Version`, and select the engine version you would like to develop with
+  * We have tested with UE 4.27 - 5.1
+* Right click `FPS_Demo.uproject` and click `Generate Visual Studio Project Files`
+* Open FPS_Demo.sln
+* Select `Development Editor` as the build configuration
+* Right click FPS_Demo in the solution explorer and select `Build`
+* Launch `FPS_Demo.uproject`
+* If you get a "Fetch is Incompatible" popup, click yes. 
+  * We include the [Fetch plugin](https://github.com/GDi4K/unreal-fetch) as a separate option to Web3.Unreal for making 3rd party rpc calls, but it has restrictive commercial licensing (Creative Commons Non-Commercial license), error prone syntax, and lots of boilerplate. 
+* In `Content/FirstPersonBP/Blueprints/FirstPersonCharacter`, there are many examples of web3 functionality that can be performed with web3.unreal
+  * Check out the `Web3UnrealExamplesGraph` for a list of examples
+* Get some goerli eth [here](https://goerlifaucet.com/)
+* Play the game. Interacting with the items on the wall will request web3 transactions
+  * You will need to have the HyperPlay desktop app running to perform this functionality. Sign up for early access [here](https://docs.google.com/forms/d/e/1FAIpQLSeBWkOkzUZ6K_i8f6181upDcOFPgGv-7A2KxsSgqUQTPz3h4Q/viewform). Otherwise you will only be able to use web3.unreal for 3rd party reads
+    * HyperPlay will be fully open sourced in early 2023
+  
+Feel free to submit an issue or PR to web3.unreal if you cannot find the functionality that you need
+
 ## Writes
 Sending transactions is made possible through the HyperPlay desktop app. This removes the complexity of Unreal game devs having to integrate complex UI and wallet integration functionality into their game. Through its integration with web2 game stores, in game overlay, and MetaMask, HyperPlay makes this experience seemless for gamers.
 
