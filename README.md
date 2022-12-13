@@ -34,4 +34,4 @@ Reads can be performed locally through the HyperPlay desktop app but these are s
 Reads in these types of games would be similar to how client side only games are easily manipulated today since the entire game is on the user's machine. 
 
 ### Client Server Games
-It is recommended for client server model games that reads be performed server side. You can use web3.unreal to connect to any third party node provider while still enjoying all the functionality and ease of use the plugin already provides. Third party node providers we recommend are [Infura](https://www.infura.io/) RPCh, [POKT Network](https://www.pokt.network/), or other RPC services.
+It is recommended for client server model games that reads be performed server side. You can use web3.unreal to connect to any third party node provider while still enjoying all the functionality and ease of use the plugin already provides. Third party node providers we recommend are [Infura](https://www.infura.io/), RPCh, [POKT Network](https://www.pokt.network/), or other RPC services.
