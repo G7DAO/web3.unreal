@@ -1,5 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "HyperPlayLibrary.h"
 
 DEFINE_LOG_CATEGORY(HyperPlayLibraryLog);
