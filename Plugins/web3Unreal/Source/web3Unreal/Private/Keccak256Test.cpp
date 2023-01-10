@@ -8,13 +8,12 @@ END_DEFINE_SPEC(Keccak256Spec)
 
 void Keccak256Spec::Define()
 {
-    // Describe doesn't really do anything, literally just 'describe' the string in the output log
     Describe("Compute Keccak256 Hash", [this](){
             It("Should compute hello world hash correctly", [this](){
                 const FString Data("hello world");
             	const FString Hash = UKeccak256Node::Keccak256(Data);
             	const FString CorrectHash("0x47173285A8D7341E5E972FC677286384F802F8EF42A5EC5F03BBFA254CB01FAD");
-            	UE_LOG(LogTemp, Warning, TEXT("hash = %s and correct hash = %s"), *(Hash), *CorrectHash);
+            	UE_LOG(LogTemp, Display, TEXT("hash = %s and correct hash = %s"), *(Hash), *CorrectHash);
                 TestTrue("keccak256 hash computed correctly", Hash.Equals(CorrectHash));
             });
     });
