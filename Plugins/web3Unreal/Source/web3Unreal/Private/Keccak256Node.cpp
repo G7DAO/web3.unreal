@@ -1,6 +1,9 @@
 #include "Keccak256Node.h"
 #include "Keccak256.h"
 
+/*
+ * Converts c style char array to c++ string representing the byte array in hex
+ */
 std::string UKeccak256Node::hexStr(unsigned char* data, int len)
 {
 	std::string s(len * 2, ' ');
@@ -11,6 +14,9 @@ std::string UKeccak256Node::hexStr(unsigned char* data, int len)
 	return s;
 }
 
+/*
+ * Computes the Keccak256 hash of a text string
+ */
 FString UKeccak256Node::Keccak256(FString data) {
 	auto dataLengthInBytes = data.Len();
 	std::string msg;

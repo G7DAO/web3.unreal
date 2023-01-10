@@ -17,10 +17,9 @@ void Secp256k1HelperTest::Define()
 					0x61, 0x2B, 0x1F, 0xCE, 0x77, 0xC8, 0x69, 0x34,
 					0x5B, 0xFC, 0x94, 0xC7, 0x58, 0x94, 0xED, 0xD3,
 				};
-				FString publicKey = Secp256k1Helper::CalcPublicKeyFromPrivateKey(seckey);
-            	const FString CorrectPublicKey("0XDB6191D3BFCF5773F91973590BF3F072F48C2DF2");
+				const FString publicKey = Secp256k1Helper::CalcPublicAddressFromPrivateKey(seckey);
+            	const FString CorrectPublicKey("0xDB6191D3BFCF5773F91973590BF3F072F48C2DF2");
                 TestTrue("public key computed correctly", publicKey.Equals(CorrectPublicKey));
-				UE_LOG(LogTemp, Display, TEXT("public key = %s"), *publicKey);
 			});
 	});
 }
