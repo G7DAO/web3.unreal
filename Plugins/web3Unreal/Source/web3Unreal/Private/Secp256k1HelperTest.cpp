@@ -21,5 +21,15 @@ void Secp256k1HelperTest::Define()
             	const FString CorrectPublicKey("0xDB6191D3BFCF5773F91973590BF3F072F48C2DF2");
                 TestTrue("public key computed correctly", publicKey.Equals(CorrectPublicKey));
 			});
+
+		
+		It("Should verify an ECDSA signature", [this](){
+			std::string messageString = "\\x19Ethereum Signed Message:\n11Hello World";
+			FString msg(messageString.c_str());
+			FString signature("50f31864261ed750ed089309ebc8260749b97aaae5738e76f26a93db7d6d5e5f5738bb3b352be93820d5b2c6be379d57b6ebdc2aa4833b2820c042bbb251039c1c");
+			int recoveryId = 1;
+			FString pubAddressThatSigned = Secp256k1Helper::RecoverPublicAddressFromSignature(msg, signature, recoveryId);
+			UE_LOG(LogTemp, Display, TEXT("pub address that signed = %s"), *pubAddressThatSigned);
+		});
 	});
 }

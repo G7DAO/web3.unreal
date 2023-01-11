@@ -1,6 +1,0 @@
-﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=43f0fcb9_002Ddd29_002D47f1_002Dab0d_002D6a267d427866/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Secp256k1HelperSpec" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;UnrealTest::CA844256-34C6-3E1D-9F19-798BCE12CF93::Windows,Version=v10.0.22621::Web3Unreal.Secp256k1HelperSpec&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
