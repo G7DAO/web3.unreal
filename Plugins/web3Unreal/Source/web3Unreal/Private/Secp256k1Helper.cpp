@@ -46,12 +46,13 @@ FString Secp256k1Helper::CalcFStringPublicAddress(secp256k1_context* ctx, secp25
 */
 FString Secp256k1Helper::RecoverPublicAddressFromSignature(
 		std::string message,
-		FString signatureHexString,
-		int recid)
+		FString signatureHexString)
 {
 	unsigned char serialized_signature[65] = {0};
 
 	UKeccak256Node::ByteArrayFromHexStr(signatureHexString, serialized_signature);
+
+	int recId = 1 - serialized_signature[64] % 2;
 	//Before we can call actual API functions, we need to create a "context".
 	secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_NONE);
 
@@ -59,7 +60,7 @@ FString Secp256k1Helper::RecoverPublicAddressFromSignature(
 	Keccak256::getHash((uint8_t *)message.c_str(), message.length(), msg_hash);
 
 	secp256k1_ecdsa_recoverable_signature sig;
-	secp256k1_ecdsa_recoverable_signature_parse_compact(ctx, &sig, serialized_signature, recid);
+	secp256k1_ecdsa_recoverable_signature_parse_compact(ctx, &sig, serialized_signature, recId);
 
 	secp256k1_pubkey pubkeyThatSigned;
 	secp256k1_ecdsa_recover(ctx, &pubkeyThatSigned, &sig, msg_hash);
