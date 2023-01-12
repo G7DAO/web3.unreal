@@ -80,3 +80,6 @@ DerivedDataCache/*
 
 # Ignore packaged builds
 Builds/*
+
+#other
+FPS_Demo.sln.DotSettings.user

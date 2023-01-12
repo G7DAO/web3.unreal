@@ -16,12 +16,13 @@ std::string UKeccak256Node::hexStr(unsigned char* data, int len)
 
 void UKeccak256Node::ByteArrayFromHexStr(FString hexString, unsigned char byteArray[])
 {
+	FString hexStringUpper = hexString.ToUpper();
 	int byteArrayIndex = 0;
-	for (auto iter = hexString.begin(); iter != hexString.end(); ++iter)
+	for (auto iter = hexStringUpper.begin(); iter != hexStringUpper.end(); ++iter)
 	{
 		wchar_t char_i = *iter;
 		++iter;
-		if (!(iter != hexString.end()))
+		if (!(iter != hexStringUpper.end()))
 		{
 			throw "Hex string is not made up of complete bytes!";
 		}
@@ -30,8 +31,8 @@ void UKeccak256Node::ByteArrayFromHexStr(FString hexString, unsigned char byteAr
 		//map the character to 0xletter then shift the higher one over and bitwise or them
 		auto byte_0 = hexCharToByteMap.at(char_i);
 		auto byte_1 = hexCharToByteMap.at(char_iPlus1);
-		unsigned char byteToAdd = (byte_0 << 2) | byte_1;
-		byteArray[byteArrayIndex];
+		unsigned char byteToAdd = (byte_0 << 4) | byte_1;
+		byteArray[byteArrayIndex] = byteToAdd;
 		++byteArrayIndex;
 	}
 }
