@@ -10,7 +10,7 @@ UCLASS()
 class UKeccak256Node : public UBlueprintFunctionLibrary {
 	GENERATED_BODY()
 public:
-	UFUNCTION(BlueprintCallable, Category = "Web3.Unreal")
+	UFUNCTION(BlueprintPure, Category = "Web3.Unreal")
 		static FString Keccak256(FString data);
 
 	static std::string hexStr(unsigned char* data, int len);
