@@ -1,5 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "HyperPlayLibrary.h"
 
 DEFINE_LOG_CATEGORY(HyperPlayLibraryLog);
@@ -89,13 +87,12 @@ void UHyperPlayLibrary::CallRpcEndpoint() {
 	if (this->url.Equals(TEXT("http://localhost:9680/rpc"))) {
 		this->BuildLocalRequest(requestObject);
 		TSharedRef<FCondensedJsonStringWriter> Writer = FCondensedJsonStringWriterFactory::Create(&OutputString);
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *(OutputString));
 		FJsonSerializer::Serialize(requestObject.ToSharedRef(), Writer);
 	}
 	else {
 		OutputString = this->request;
 	}
-	
+
 	Request->SetContentAsString(OutputString);
 	Request->OnProcessRequestComplete().BindUObject(this, &UHyperPlayLibrary::OnResponse);
 	Request->ProcessRequest();
@@ -154,7 +151,6 @@ void UHyperPlayLibrary::CallSendContractEndpoint() {
 	// below is same as rpc. consider refactoring into separate method
 	FString OutputString;
 	TSharedRef<FCondensedJsonStringWriter> Writer = FCondensedJsonStringWriterFactory::Create(&OutputString);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *(OutputString));
 	FJsonSerializer::Serialize(requestObject.ToSharedRef(), Writer);
 	Request->SetContentAsString(OutputString);
 	Request->OnProcessRequestComplete().BindUObject(this, &UHyperPlayLibrary::OnResponse);

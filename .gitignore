@@ -1,6 +1,9 @@
 # Visual Studio 2015 user specific files
 .vs/
 
+# Rider C++
+Plugins/Developer/RiderLink/
+
 # Compiled Object files
 *.slo
 *.lo
@@ -24,6 +27,8 @@
 *.la
 *.a
 *.lib
+!Plugins/web3Unreal/Source/ThirdParty/lib/libsecp256k1.a
+!Plugins/web3Unreal/Source/ThirdParty/lib/libsecp256k1.lib
 
 # Executables
 *.exe
@@ -75,3 +80,6 @@ DerivedDataCache/*
 
 # Ignore packaged builds
 Builds/*
+
+#other
+FPS_Demo.sln.DotSettings.user

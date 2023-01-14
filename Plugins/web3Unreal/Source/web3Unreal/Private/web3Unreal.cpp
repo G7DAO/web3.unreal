@@ -1,5 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "web3Unreal.h"
 
 #define LOCTEXT_NAMESPACE "Fweb3UnrealModule"
