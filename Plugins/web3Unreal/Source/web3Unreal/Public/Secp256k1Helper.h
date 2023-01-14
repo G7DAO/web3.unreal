@@ -6,7 +6,7 @@ class Secp256k1Helper final
 public:
 	static FString CalcPublicAddressFromPrivateKey(unsigned char seckey[32]);
 	static FString RecoverPublicAddressFromSignature(
-		std::string message,
+		unsigned char msg_hash[32],
 		FString signatureHexString);
 	static FString CalcFStringPublicAddress(secp256k1_context* ctx, secp256k1_pubkey pubkey);
 };

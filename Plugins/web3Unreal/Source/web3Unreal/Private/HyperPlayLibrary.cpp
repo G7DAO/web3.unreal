@@ -14,11 +14,22 @@ void UHyperPlayLibrary::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Res
 
 		// JSON parsing
 		TSharedPtr<FJsonValue> ParsedJSON;
-		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(ResponseText);
-		FJsonSerializer::Deserialize(Reader, ParsedJSON);
-		this->ProcessResponse(Response, statusCode);
-		this->ExecuteOnResponse();
-		return;
+	UE_LOG(LogTemp, Warning, TEXT("parsing json"));
+		/*try
+		{*/
+			TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(ResponseText);
+			FJsonSerializer::Deserialize(Reader, ParsedJSON);
+			this->ProcessResponse(Response, statusCode);
+		UE_LOG(LogTemp, Warning, TEXT("executing on response"));
+			this->ExecuteOnResponse();
+		UE_LOG(LogTemp, Warning, TEXT("parsed json"));
+
+			return;
+		/*}
+		catch()
+		{
+			//
+		}*/
 	}
 	this->ProcessResponse(Response, 404);
 	this->ExecuteOnResponse();
@@ -93,9 +104,12 @@ void UHyperPlayLibrary::CallRpcEndpoint() {
 	else {
 		OutputString = this->request;
 	}
-	
+
+	UE_LOG(LogTemp, Warning, TEXT("Setting content as string"));
 	Request->SetContentAsString(OutputString);
+	UE_LOG(LogTemp, Warning, TEXT("on process complete binding"));
 	Request->OnProcessRequestComplete().BindUObject(this, &UHyperPlayLibrary::OnResponse);
+	UE_LOG(LogTemp, Warning, TEXT("processing request"));
 	Request->ProcessRequest();
 }
 

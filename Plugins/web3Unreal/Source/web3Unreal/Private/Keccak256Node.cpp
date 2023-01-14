@@ -59,3 +59,49 @@ FString UKeccak256Node::Keccak256(FString data) {
 	FString ret(retHex.c_str());
 	return ret;
 }
+
+TArray<uint8> UKeccak256Node::Keccak256Bytes(FString data) {
+	uint8_t dest[32] = { 0 };
+	HashFStringToByteArray(data, dest);
+	TArray<uint8_t> ret;
+	ret.Append(dest, 32);
+	return ret;
+}
+
+TArray<uint8> UKeccak256Node::ConcatByteArraysAndKeccak256(TArray<uint8> data, TArray<uint8> data2, TArray<uint8> data3)
+{
+	auto numElements = data.Num() + data2.Num() + data3.Num();
+	std::vector<uint8> msg;
+	for (auto iter = data.begin(); iter != data.end(); ++iter)
+	{
+		uint8 char_i = *iter;
+		msg.push_back(char_i);
+	}
+	for (auto iter = data2.begin(); iter != data2.end(); ++iter)
+	{
+		uint8 char_i = *iter;
+		msg.push_back(char_i);
+	}
+	for (auto iter = data3.begin(); iter != data3.end(); ++iter)
+	{
+		uint8 char_i = *iter;
+		msg.push_back(char_i);
+	}
+	uint8_t dest[32] = { 0 };
+	Keccak256::getHash(&msg[0], numElements, dest);
+	TArray<uint8_t> ret;
+	ret.Append(dest, 32);
+	return ret;
+}
+
+FString UKeccak256Node::ByteArrayToFString(TArray<uint8> arr)
+{
+	std::vector<uint8> msg;
+	for (auto iter = arr.begin(); iter != arr.end(); ++iter)
+	{
+		uint8 char_i = *iter;
+		msg.push_back(char_i);
+	}
+	auto msgStr = hexStr(&msg[0], msg.size());
+	return FString(msgStr.c_str());
+}

@@ -13,6 +13,8 @@ URpcCall* URpcCall::RpcCall(const UObject* WorldContextObject, FString request, 
 }
 
 void URpcCall::ProcessResponse(FHttpResponsePtr Response, int32 statusCode) {
+		UE_LOG(LogTemp, Warning, TEXT("proccessing response in rpc call"));
 	FString ResponseText = Response->GetContentAsString();
+		UE_LOG(LogTemp, Warning, TEXT("broadcasting"));
 	OnResponseOutput.Broadcast(ResponseText, statusCode);
 }
