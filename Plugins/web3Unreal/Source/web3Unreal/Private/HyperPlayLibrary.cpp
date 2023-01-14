@@ -8,8 +8,14 @@ UHyperPlayLibrary::UHyperPlayLibrary(const FObjectInitializer& ObjectInitializer
 }
 
 void UHyperPlayLibrary::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
+	UE_LOG(LogTemp, Warning, TEXT("bWasSuccessful = %hs"), bWasSuccessful ? "true" : "false");
 	if (bWasSuccessful) {
 		int32 statusCode = Response->GetResponseCode();
+		if (!this->StatusCodeIsSuccess(statusCode))
+		{
+			this->OnFailure.Broadcast();
+			return;
+		}
 		FString ResponseText = Response->GetContentAsString();
 
 		// JSON parsing
@@ -20,8 +26,16 @@ void UHyperPlayLibrary::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Res
 		this->ExecuteOnResponse();
 		return;
 	}
-	this->ProcessResponse(Response, 404);
-	this->ExecuteOnResponse();
+	this->OnFailure.Broadcast();
+}
+
+bool UHyperPlayLibrary::StatusCodeIsSuccess(int32 statusCode)
+{
+	if (statusCode > 199 && statusCode < 300)
+	{
+		return true;
+	}
+	return false;
 }
 
 TSharedPtr<FJsonValue> UHyperPlayLibrary::CreateJsonValue(FString obj) {
