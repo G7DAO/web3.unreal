@@ -7,6 +7,8 @@
 
 DECLARE_LOG_CATEGORY_EXTERN(HyperPlayLibraryLog, Display, All);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTxnFailedOutputPin);
+
 UCLASS()
 class UHyperPlayLibrary : public UBlueprintAsyncActionBase
 {
@@ -34,6 +36,9 @@ public:
 		int32 chainId
 	);
 
+	UPROPERTY(BlueprintAssignable)
+		FTxnFailedOutputPin OnFailure;
+
 	// UBlueprintAsyncActionBase interface
 	virtual void Activate() override;
 	//~UBlueprintAsyncActionBase interface
@@ -48,6 +53,7 @@ private:
 	void OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 	void CallRpcEndpoint();
 	void CallSendContractEndpoint();
+	bool StatusCodeIsSuccess(int32 statusCode);
 
 private:
 	void BuildLocalRequest(TSharedPtr<FJsonObject> requestObject);
