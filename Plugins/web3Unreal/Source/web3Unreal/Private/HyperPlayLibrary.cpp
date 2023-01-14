@@ -14,22 +14,11 @@ void UHyperPlayLibrary::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Res
 
 		// JSON parsing
 		TSharedPtr<FJsonValue> ParsedJSON;
-	UE_LOG(LogTemp, Warning, TEXT("parsing json"));
-		/*try
-		{*/
-			TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(ResponseText);
-			FJsonSerializer::Deserialize(Reader, ParsedJSON);
-			this->ProcessResponse(Response, statusCode);
-		UE_LOG(LogTemp, Warning, TEXT("executing on response"));
-			this->ExecuteOnResponse();
-		UE_LOG(LogTemp, Warning, TEXT("parsed json"));
-
-			return;
-		/*}
-		catch()
-		{
-			//
-		}*/
+		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(ResponseText);
+		FJsonSerializer::Deserialize(Reader, ParsedJSON);
+		this->ProcessResponse(Response, statusCode);
+		this->ExecuteOnResponse();
+		return;
 	}
 	this->ProcessResponse(Response, 404);
 	this->ExecuteOnResponse();
@@ -98,18 +87,14 @@ void UHyperPlayLibrary::CallRpcEndpoint() {
 	if (this->url.Equals(TEXT("http://localhost:9680/rpc"))) {
 		this->BuildLocalRequest(requestObject);
 		TSharedRef<FCondensedJsonStringWriter> Writer = FCondensedJsonStringWriterFactory::Create(&OutputString);
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *(OutputString));
 		FJsonSerializer::Serialize(requestObject.ToSharedRef(), Writer);
 	}
 	else {
 		OutputString = this->request;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Setting content as string"));
 	Request->SetContentAsString(OutputString);
-	UE_LOG(LogTemp, Warning, TEXT("on process complete binding"));
 	Request->OnProcessRequestComplete().BindUObject(this, &UHyperPlayLibrary::OnResponse);
-	UE_LOG(LogTemp, Warning, TEXT("processing request"));
 	Request->ProcessRequest();
 }
 
@@ -166,7 +151,6 @@ void UHyperPlayLibrary::CallSendContractEndpoint() {
 	// below is same as rpc. consider refactoring into separate method
 	FString OutputString;
 	TSharedRef<FCondensedJsonStringWriter> Writer = FCondensedJsonStringWriterFactory::Create(&OutputString);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *(OutputString));
 	FJsonSerializer::Serialize(requestObject.ToSharedRef(), Writer);
 	Request->SetContentAsString(OutputString);
 	Request->OnProcessRequestComplete().BindUObject(this, &UHyperPlayLibrary::OnResponse);
