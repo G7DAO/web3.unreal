@@ -9,7 +9,7 @@
  * Exposes functionality that utilizes the bitcoin core secp256k1 library to Blueprints/C++ code
  */
 UCLASS()
-class USecp256k1Helper : public UBlueprintFunctionLibrary{
+class WEB3UNREAL_API USecp256k1Helper : public UBlueprintFunctionLibrary{
  GENERATED_BODY()
 public:
   UFUNCTION(BlueprintCallable, Category = "Web3.Unreal|Secp256k1")

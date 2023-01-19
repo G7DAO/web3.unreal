@@ -9,7 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPinRpcCall, FString, Response, int32, StatusCode);
 
 UCLASS()
-class URpcCall : public UHyperPlayLibrary
+class WEB3UNREAL_API URpcCall : public UHyperPlayLibrary
 {
 	GENERATED_UCLASS_BODY()
 

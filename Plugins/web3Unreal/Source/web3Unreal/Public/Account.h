@@ -5,7 +5,7 @@
  * Eth account with private and public key
  */
 USTRUCT(BlueprintType)
-struct FAccount
+struct WEB3UNREAL_API FAccount
 {
 	GENERATED_BODY()
 
