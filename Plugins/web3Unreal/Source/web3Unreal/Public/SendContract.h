@@ -9,7 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPinSendContract, FString, Response, int32, StatusCode);
 
 UCLASS()
-class USendContract : public UHyperPlayLibrary
+class WEB3UNREAL_API USendContract : public UHyperPlayLibrary
 {
 	GENERATED_UCLASS_BODY()
 

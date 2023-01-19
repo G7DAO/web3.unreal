@@ -6,7 +6,7 @@
  * Generic utility functions used by other web3 classes
  */
 UCLASS()
-class UWeb3Utils : public UBlueprintFunctionLibrary {
+class WEB3UNREAL_API UWeb3Utils : public UBlueprintFunctionLibrary {
 	GENERATED_BODY()
 public:
 		

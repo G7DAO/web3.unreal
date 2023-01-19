@@ -9,7 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPin, FString, SelectedAccount, int32, StatusCode);
 
 UCLASS()
-class UGetAccounts : public UHyperPlayLibrary
+class WEB3UNREAL_API UGetAccounts : public UHyperPlayLibrary
 {
 	GENERATED_UCLASS_BODY()
 

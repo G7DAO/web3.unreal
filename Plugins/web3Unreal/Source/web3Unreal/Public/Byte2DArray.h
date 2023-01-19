@@ -7,7 +7,7 @@
  * 2D Byte Array for Blueprints
  */
 USTRUCT(BlueprintType)
-struct FByte2DArray
+struct WEB3UNREAL_API FByte2DArray
 {
 	GENERATED_BODY()
 

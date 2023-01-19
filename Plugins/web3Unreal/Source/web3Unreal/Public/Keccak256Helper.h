@@ -7,7 +7,7 @@
  * Exposes Keccak256.h functionality to Blueprints/C++ code as a Function Library
  */
 UCLASS()
-class UKeccak256Helper : public UBlueprintFunctionLibrary {
+class WEB3UNREAL_API UKeccak256Helper : public UBlueprintFunctionLibrary {
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintPure, Category = "Web3.Unreal|Keccak256")
