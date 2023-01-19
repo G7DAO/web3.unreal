@@ -2,6 +2,7 @@
 #include "Keccak256.h"
 #include "Logging/LogMacros.h"
 #include "Web3Utils.h"
+#include "Random.h"
 
 /*
  * Recovers the public address from a 32 byte message hash and a hex character FString signature    
@@ -88,4 +89,54 @@ FString USecp256k1Helper::RecoverPublicAddressFromSignature(
 	/* This will clear everything from the context and free the memory */
 	//secp256k1_context_destroy(ctx);
 	return pubkeyFString;
+}
+
+bool USecp256k1Helper::GenerateRandomPrivateKey(secp256k1_context* ctx, unsigned char seckey[32])
+{
+	unsigned char randomize[32] = {0};
+	if (!fill_random(randomize, 32)) {
+		printf("Failed to generate randomness\n");
+		return false;
+	}
+	
+	secp256k1_context_randomize(ctx, randomize);
+
+	/*** Key Generation ***/
+
+	/* If the secret key is zero or out of range (bigger than secp256k1's
+	 * order), we try to sample a new key. Note that the probability of this
+	 * happening is negligible. */
+	while (1) {
+		if (!fill_random(seckey, 32)) {
+			printf("Failed to generate randomness\n");
+			return false;
+		}
+		if (secp256k1_ec_seckey_verify(ctx, seckey)) {
+			break;
+		}
+	}
+	
+	return true;
+}
+
+FAccount USecp256k1Helper::GenerateNewAccount()
+{
+	//Before we can call actual API functions, we need to create a "context".
+	secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_NONE);
+	unsigned char seckey[32] = {0};
+	if (!GenerateRandomPrivateKey(ctx, seckey))
+	{
+		return FAccount();
+	}
+	
+	const std::string privKeyString = UWeb3Utils::hexStr(seckey, 32);
+	const FString privKeyFString(privKeyString.c_str());
+	FString privateKeyFinal = FString("0x") + privKeyFString;
+
+	FString pubAddr = CalcPublicAddressFromPrivateKey(seckey);
+
+	FAccount acct;
+	acct.privateKey = privateKeyFinal;
+	acct.publicAddress = pubAddr;
+	return acct;
 }

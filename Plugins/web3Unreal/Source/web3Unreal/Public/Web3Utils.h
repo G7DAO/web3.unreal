@@ -1,7 +1,6 @@
+#pragma once
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Web3Utils.generated.h"
-
-#pragma once
 
 /**
  * Generic utility functions used by other web3 classes

@@ -1,3 +1,4 @@
+#pragma once
 #include "Byte2DArray.generated.h"
 
 #pragma once
@@ -10,7 +11,7 @@ struct FByte2DArray
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Test Variables")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Web3.Unreal|Types")
 	TArray<uint8> data;
 
 	/**~
