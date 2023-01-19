@@ -1,8 +1,7 @@
+#pragma once
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Byte2DArray.h"
 #include "Keccak256Helper.generated.h"
-
-#pragma once
 
 /**
  * Exposes Keccak256.h functionality to Blueprints/C++ code as a Function Library
