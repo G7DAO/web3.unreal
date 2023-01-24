@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "5.1",
+	"EngineAssociation": "4.27",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -11,10 +11,6 @@
 		}
 	],
 	"Plugins": [
-		{
-			"Name": "AutomationDriverTests",
-			"Enabled": true
-		},
 		{
 			"Name": "FunctionalTestingEditor",
 			"Enabled": true

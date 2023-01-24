@@ -18,6 +18,24 @@ std::string UWeb3Utils::hexStr(unsigned char* data, int len)
  */
 void UWeb3Utils::ByteArrayFromHexStr(FString hexString, unsigned char byteArray[])
 {
+	std::unordered_map<wchar_t, unsigned char> hexCharToByteMap = {
+		{'0', 0x00},
+		{'1', 0x01},
+		{'2', 0x02},
+		{'3', 0x03},
+		{'4', 0x04},
+		{'5', 0x05},
+		{'6', 0x06},
+		{'7', 0x07},
+		{'8', 0x08},
+		{'9', 0x09},
+		{'A', 0x0A},
+		{'B', 0x0B},
+		{'C', 0x0C},
+		{'D', 0x0D},
+		{'E', 0x0E},
+		{'F', 0x0F}
+	};
 	FString hexStringUpper = hexString.ToUpper();
 	int byteArrayIndex = 0;
 	for (auto iter = hexStringUpper.begin(); iter != hexStringUpper.end(); ++iter)
