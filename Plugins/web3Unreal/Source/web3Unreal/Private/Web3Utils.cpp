@@ -13,13 +13,18 @@ std::string UWeb3Utils::hexStr(unsigned char* data, int len)
 	return s;
 }
 
+std::string UWeb3Utils::hexStr(std::vector<unsigned char> data)
+{
+	return UWeb3Utils::hexStr(&data[0], data.size());
+}
+
 /*
  * Converts a string with hex chars representing a hex value to its corresponding byte array
  */
-void UWeb3Utils::ByteArrayFromHexStr(FString hexString, unsigned char byteArray[])
+std::vector<unsigned char> UWeb3Utils::ByteArrayFromHexStr(FString hexString)
 {
 	FString hexStringUpper = hexString.ToUpper();
-	int byteArrayIndex = 0;
+	std::vector<unsigned char> byteArray;
 	for (auto iter = hexStringUpper.begin(); iter != hexStringUpper.end(); ++iter)
 	{
 		wchar_t char_i = *iter;
@@ -34,9 +39,9 @@ void UWeb3Utils::ByteArrayFromHexStr(FString hexString, unsigned char byteArray[
 		auto byte_0 = hexCharToByteMap.at(char_i);
 		auto byte_1 = hexCharToByteMap.at(char_iPlus1);
 		unsigned char byteToAdd = (byte_0 << 4) | byte_1;
-		byteArray[byteArrayIndex] = byteToAdd;
-		++byteArrayIndex;
+		byteArray.push_back(byteToAdd);
 	}
+	return byteArray;
 }
 /*
  * Converts TArray of bytes to c++ string representing the byte array in hex
