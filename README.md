@@ -20,6 +20,14 @@ Follow these instructions to install the web3.unreal plugin:
 * Start your app & it will ask to compile the plugin. Proceed with that.
 * You might need to [setup Visual Studio](https://docs.unrealengine.com/en-US/ProductionPipelines/DevelopmentSetup/VisualStudioSetup/index.html) for Unreal Engine.
 
+## Common Issues
+* When switching branches with the FPS_Demo project, be sure to right click the .uproject and ensure the right engine version is selected with "Switch Unreal Engine Version...". 
+  * You should also click "Generate Visual Studio Project Files" if they are not automatically generated after the last step. 
+  * Then you must build through your editor. We recommend Visual Studio 2022 or JetBrains Rider. We don't recommend Visual Studio 2019 due to its performance, but it will work as well.
+* When copying the plugin source files into your plugin folder, you must "Generate Visual Studio Project Files" and build through your editor
+  * We will be distributing precompiled plugin files soon so non C++ UE projects can use web3.unreal
+* The main branch is intended to be up to date with the latest Unreal Engine 5 version. If you use Unreal Engine 4, try the version/4.27 branch.
+
 ## Contributing
 Follow these instructions to start contributing to web3.unreal:
 * Clone the repo
@@ -56,3 +64,4 @@ Reads in these types of games would be similar to how client side only games are
 
 ### Client Server Games
 It is recommended for client server model games that reads be performed server side. You can use web3.unreal to connect to any third party node provider while still enjoying all the functionality and ease of use the plugin already provides. Third party node providers we recommend are [Infura](https://www.infura.io/), RPCh, [POKT Network](https://www.pokt.network/), or other RPC services.
+
