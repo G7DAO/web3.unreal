@@ -12,11 +12,15 @@ UCLASS()
 class WEB3UNREAL_API USecp256k1Helper : public UBlueprintFunctionLibrary{
  GENERATED_BODY()
 public:
-  UFUNCTION(BlueprintCallable, Category = "Web3.Unreal|Secp256k1")
+ UFUNCTION(BlueprintCallable, Category = "Web3.Unreal|Secp256k1")
 	  static FString RecoverAddressFromSignature(TArray<uint8> message, FString signature);
 
  UFUNCTION(BlueprintCallable, Category = "Web3.Unreal|Secp256k1")
    static FAccount GenerateNewAccount();
+
+ //messageHash should be 32 bytes in length
+ UFUNCTION(BlueprintCallable, Category = "Web3.Unreal|Secp256k1")
+   static FString SignMessage(TArray<uint8> messageHash, TArray<uint8> privateKey, int chainId = 1);
  
  static FString CalcPublicAddressFromPrivateKey(unsigned char seckey[32]);
  static FString RecoverPublicAddressFromSignature(
@@ -26,4 +30,5 @@ public:
 
 private:
  static bool GenerateRandomPrivateKey(secp256k1_context* ctx, unsigned char seckey[32]);
+
 };

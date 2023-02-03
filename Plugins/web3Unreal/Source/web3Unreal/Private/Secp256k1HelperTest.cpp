@@ -2,9 +2,10 @@
 #include "Secp256k1Helper.h"
 #include "Tests/AutomationCommon.h"
 #include "Keccak256Helper.h"
+#include "Web3Utils.h"
 
 BEGIN_DEFINE_SPEC(Secp256k1HelperTest, "Web3Unreal.Secp256k1HelperSpec", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::ApplicationContextMask)
-// Global variables that are shared by all tests go here
+	// Global variables that are shared by all tests go here
 END_DEFINE_SPEC(Secp256k1HelperTest)
 
 void Secp256k1HelperTest::Define()
@@ -34,6 +35,24 @@ void Secp256k1HelperTest::Define()
 			UE_LOG(LogTemp, Display, TEXT("pub address that signed = %s"), *pubAddressThatSigned);
 			const FString CorrectPublicKey("0xDB6191D3BFCF5773F91973590BF3F072F48C2DF2");
 			TestTrue("public key computed correctly", pubAddressThatSigned.Equals(CorrectPublicKey));
+		});
+		
+		It("Should generate an ECDSA signature and recover the signing public address", [this](){
+			auto Acct = USecp256k1Helper::GenerateNewAccount();
+
+			std::string msgPrefix = "\x19";
+			std::string messageString = msgPrefix + "Ethereum Signed Message:\n11Hello World";
+			FString msg(messageString.c_str());
+			TArray<uint8> msgBytesHash = UKeccak256Helper::Keccak256Bytes(msg);
+
+			TArray<uint8> privateKey = UWeb3Utils::GetPrivateKeyBytes(Acct.privateKey);
+			FString signature = USecp256k1Helper::SignMessage(msgBytesHash, privateKey, 1);
+
+			FString pubAddressThatSigned = USecp256k1Helper::RecoverAddressFromSignature(msgBytesHash, signature);
+			UE_LOG(LogTemp, Display, TEXT("pub address that signed = %s"), *pubAddressThatSigned);
+
+			UE_LOG(LogTemp, Display, TEXT("correct pub address = %s"), *(Acct.publicAddress));
+			TestTrue("public key computed correctly", pubAddressThatSigned.Equals(Acct.publicAddress));
 		});
 	});
 }
