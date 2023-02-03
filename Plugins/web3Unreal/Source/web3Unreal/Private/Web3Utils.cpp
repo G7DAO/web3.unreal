@@ -57,3 +57,11 @@ FString UWeb3Utils::ByteArrayToFString(TArray<uint8> arr)
 	auto msgStr = hexStr(&msg[0], msg.size());
 	return FString(msgStr.c_str());
 }
+
+TArray<uint8> UWeb3Utils::GetPrivateKeyBytes(FString key)
+{
+	FString privateKeyValue = key.RightChop(2);
+	auto privKeyVector = UWeb3Utils::ByteArrayFromHexStr(privateKeyValue);
+	TArray<uint8> privateKey = UWeb3Utils::ConvertVectorToTArray(privKeyVector);
+	return privateKey;
+}

@@ -20,7 +20,7 @@ public:
 
  //messageHash should be 32 bytes in length
  UFUNCTION(BlueprintCallable, Category = "Web3.Unreal|Secp256k1")
-   static FString SignMessage(TArray<uint8> messageHash, TArray<uint8> privateKey);
+   static FString SignMessage(TArray<uint8> messageHash, TArray<uint8> privateKey, int chainId = 1);
  
  static FString CalcPublicAddressFromPrivateKey(unsigned char seckey[32]);
  static FString RecoverPublicAddressFromSignature(

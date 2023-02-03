@@ -36,10 +36,8 @@ void Secp256k1HelperTest::Define()
 			const FString CorrectPublicKey("0xDB6191D3BFCF5773F91973590BF3F072F48C2DF2");
 			TestTrue("public key computed correctly", pubAddressThatSigned.Equals(CorrectPublicKey));
 		});
-
 		
 		It("Should generate an ECDSA signature and recover the signing public address", [this](){
-
 			auto Acct = USecp256k1Helper::GenerateNewAccount();
 
 			std::string msgPrefix = "\x19";
@@ -47,23 +45,14 @@ void Secp256k1HelperTest::Define()
 			FString msg(messageString.c_str());
 			TArray<uint8> msgBytesHash = UKeccak256Helper::Keccak256Bytes(msg);
 
-			FString privateKeyValue = Acct.privateKey.RightChop(2);
-			auto privKeyVector = UWeb3Utils::ByteArrayFromHexStr(privateKeyValue);
-			TArray<uint8> privateKey = UWeb3Utils::ConvertVectorToTArray(privKeyVector);
-			FString signature = USecp256k1Helper::SignMessage(msgBytesHash, privateKey);
+			TArray<uint8> privateKey = UWeb3Utils::GetPrivateKeyBytes(Acct.privateKey);
+			FString signature = USecp256k1Helper::SignMessage(msgBytesHash, privateKey, 1);
 
-
-			
 			FString pubAddressThatSigned = USecp256k1Helper::RecoverAddressFromSignature(msgBytesHash, signature);
 			UE_LOG(LogTemp, Display, TEXT("pub address that signed = %s"), *pubAddressThatSigned);
 
-			
-			FString pubKeyValue = Acct.publicAddress.RightChop(2);
-			auto pubKeyVector = UWeb3Utils::ByteArrayFromHexStr(pubKeyValue);
-			auto pubKeyString = "0x" + UWeb3Utils::hexStr(pubKeyVector);
-			const FString CorrectPublicKey(pubKeyString.c_str());//get from Acct
-			UE_LOG(LogTemp, Display, TEXT("correct pub address = %s"), *CorrectPublicKey);
-			TestTrue("public key computed correctly", pubAddressThatSigned.Equals(CorrectPublicKey));
+			UE_LOG(LogTemp, Display, TEXT("correct pub address = %s"), *(Acct.publicAddress));
+			TestTrue("public key computed correctly", pubAddressThatSigned.Equals(Acct.publicAddress));
 		});
 	});
 }

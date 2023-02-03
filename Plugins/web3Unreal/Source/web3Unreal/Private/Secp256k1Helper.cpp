@@ -138,7 +138,7 @@ FAccount USecp256k1Helper::GenerateNewAccount()
 	return acct;
 }
 
-FString USecp256k1Helper::SignMessage(TArray<uint8> messageHash, TArray<uint8> privateKey)
+FString USecp256k1Helper::SignMessage(TArray<uint8> messageHash, TArray<uint8> privateKey, int chainId)
 {
 	//Before we can call actual API functions, we need to create a "context".
 	secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_NONE);
@@ -148,13 +148,15 @@ FString USecp256k1Helper::SignMessage(TArray<uint8> messageHash, TArray<uint8> p
 	std::vector<uint8> privateKeyByteVector = UWeb3Utils::ConvertTArrayToVector(privateKey);
 	unsigned char *seckey = &privateKeyByteVector[0];
 
-	secp256k1_ecdsa_signature sig;
-	secp256k1_ecdsa_sign(ctx, &sig, msg_hash, seckey, NULL, NULL);
+	secp256k1_ecdsa_recoverable_signature sig;
+	secp256k1_ecdsa_sign_recoverable(ctx, &sig, msg_hash, seckey, NULL, NULL);
 
-	unsigned char serialized_signature[64];
-	secp256k1_ecdsa_signature_serialize_compact(ctx, serialized_signature, &sig);
+	unsigned char serialized_signature[65] = {0};
+	int recoveryId = 0;
+	secp256k1_ecdsa_recoverable_signature_serialize_compact(ctx, serialized_signature, &recoveryId, &sig);
 
-	std::string hexString = UWeb3Utils::hexStr(serialized_signature, 64);
+	serialized_signature[64] = (uint8)(35 + chainId * 2 + recoveryId);
+	std::string hexString = UWeb3Utils::hexStr(serialized_signature, 65);
 	FString ret(hexString.c_str());
 	return ret;
 }

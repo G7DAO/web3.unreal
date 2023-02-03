@@ -12,6 +12,9 @@ public:
 		
 	UFUNCTION(BlueprintPure, Category = "Web3.Unreal|Utils")
 		static FString ByteArrayToFString(TArray<uint8> arr);
+	
+	UFUNCTION(BlueprintPure, Category = "Web3.Unreal|Types")
+		static TArray<uint8> GetPrivateKeyBytes(FString key);
 
 	static std::string hexStr(unsigned char* data, int len);
 	static std::string hexStr(std::vector<unsigned char> data);
