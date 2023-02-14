@@ -18,6 +18,10 @@
 		{
 			"Name": "FunctionalTestingEditor",
 			"Enabled": true
+		},
+		{
+			"Name": "web3Unreal",
+			"Enabled": true
 		}
 	]
 }
