@@ -33,6 +33,42 @@ FString USecp256k1Helper::CalcPublicAddressFromPrivateKey(unsigned char seckey[3
 	return pubkeyFString;
 }
 
+// Implemented according to https://eips.ethereum.org/EIPS/eip-55
+std::string USecp256k1Helper::ChecksumEncode(std::string addr)
+{
+	// address must be lowercase or hashedAddress will be incorrect
+	std::transform(addr.begin(), addr.end(), addr.begin(),
+	[](unsigned char c){ return std::tolower(c); });
+	
+	const auto hexAddrCStr = (unsigned char *)addr.c_str();
+	uint8_t hashedAddress[32] = { 0 };
+	Keccak256::getHash(&hexAddrCStr[0], 40, hashedAddress);
+	const std::string hashedPubKeyHexString = UWeb3Utils::hexStr(hashedAddress, 32);
+
+	std::string checksummedPubKeyHexString;
+	for (auto nibbleIndex = 0; nibbleIndex < addr.length(); ++nibbleIndex)
+	{
+		if (std::isdigit(addr[nibbleIndex]))
+		{
+			checksummedPubKeyHexString.push_back(addr[nibbleIndex]);
+		}
+		else
+		{
+			auto nibble = hashedPubKeyHexString[nibbleIndex];
+			const char div = '7';
+			if (nibble > div)
+			{
+				checksummedPubKeyHexString.push_back(std::toupper(addr[nibbleIndex]));
+			}
+			else
+			{
+				checksummedPubKeyHexString.push_back(std::tolower(addr[nibbleIndex]));
+			}
+		}
+	}
+	return checksummedPubKeyHexString;
+}
+
 /*
 * Converts secp256k1 library public key type to an FString representing the public address
 */
@@ -48,9 +84,12 @@ FString USecp256k1Helper::CalcFStringPublicAddress(secp256k1_context* ctx, secp2
 	Keccak256::getHash(&pubkeySerialized[1], 64, hashedPubKeyBytes);
 	
 	//Convert the byte array to human readable string of the byte array represented by each character in hex
-	const std::string hashedPubKeyString = UWeb3Utils::hexStr(hashedPubKeyBytes, 32);
-	const FString hashedPubKeyFString(hashedPubKeyString.c_str());
-	FString publicKeyFinal = FString("0x") + hashedPubKeyFString.RightChop(24);
+	const std::string hashedPubKeyString = UWeb3Utils::hexStr(hashedPubKeyBytes, 32).substr(24);
+	//calc checksum
+	const std::string encodedPubKeyHexString = USecp256k1Helper::ChecksumEncode(hashedPubKeyString);
+
+	const FString hashedPubKeyFString(encodedPubKeyHexString.c_str());
+	FString publicKeyFinal = FString("0x") + hashedPubKeyFString;
 	
 	/* This will clear everything from the context and free the memory */
 	secp256k1_context_destroy(ctx);

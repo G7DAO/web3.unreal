@@ -19,7 +19,7 @@ void Secp256k1HelperTest::Define()
 					0x5B, 0xFC, 0x94, 0xC7, 0x58, 0x94, 0xED, 0xD3,
 				};
 				const FString publicKey = USecp256k1Helper::CalcPublicAddressFromPrivateKey(seckey);
-            	const FString CorrectPublicKey("0xDB6191D3BFCF5773F91973590BF3F072F48C2DF2");
+            	const FString CorrectPublicKey("0xdb6191d3bFcf5773F91973590bF3F072F48c2df2");
                 TestTrue("public key computed correctly", publicKey.Equals(CorrectPublicKey));
 			});
 
@@ -33,7 +33,7 @@ void Secp256k1HelperTest::Define()
 			FString signature("50f31864261ed750ed089309ebc8260749b97aaae5738e76f26a93db7d6d5e5f5738bb3b352be93820d5b2c6be379d57b6ebdc2aa4833b2820c042bbb251039c1c");
 			FString pubAddressThatSigned = USecp256k1Helper::RecoverAddressFromSignature(msgBytesHash, signature);
 			UE_LOG(LogTemp, Display, TEXT("pub address that signed = %s"), *pubAddressThatSigned);
-			const FString CorrectPublicKey("0xDB6191D3BFCF5773F91973590BF3F072F48C2DF2");
+			const FString CorrectPublicKey("0xdb6191d3bFcf5773F91973590bF3F072F48c2df2");
 			TestTrue("public key computed correctly", pubAddressThatSigned.Equals(CorrectPublicKey));
 		});
 		
@@ -53,6 +53,16 @@ void Secp256k1HelperTest::Define()
 
 			UE_LOG(LogTemp, Display, TEXT("correct pub address = %s"), *(Acct.publicAddress));
 			TestTrue("public key computed correctly", pubAddressThatSigned.Equals(Acct.publicAddress));
+		});
+
+		It("Should checksum encode an address", [this]()
+		{
+			std::string addr = "28A826A70DFCBBA87621251DE22A055DA015C407";
+			std::string encodedAddr = USecp256k1Helper::ChecksumEncode(addr);
+			FString encodedAddrFString(encodedAddr.c_str());
+			UE_LOG(LogTemp, Display, TEXT("encoded address = %s"), *(encodedAddrFString));
+			std::string correctAddr = "28A826A70dfcBBa87621251DE22a055DA015C407";
+			TestTrue("address encoded correctly", encodedAddr._Equal(correctAddr));
 		});
 	});
 }
