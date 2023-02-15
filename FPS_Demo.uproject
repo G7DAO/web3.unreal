@@ -12,10 +12,6 @@
 	],
 	"Plugins": [
 		{
-			"Name": "AutomationDriverTests",
-			"Enabled": true
-		},
-		{
 			"Name": "FunctionalTestingEditor",
 			"Enabled": true
 		},

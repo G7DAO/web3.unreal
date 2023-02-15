@@ -2,6 +2,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "secp256k1_recovery.h"
 #include "Account.h"
+#include <string>
+#include <algorithm>
 #include "Secp256k1Helper.generated.h"
 
 
