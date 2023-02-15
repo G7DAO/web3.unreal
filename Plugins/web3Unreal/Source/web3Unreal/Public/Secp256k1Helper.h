@@ -27,6 +27,7 @@ public:
   unsigned char msg_hash[32],
   FString signatureHexString);
  static FString CalcFStringPublicAddress(secp256k1_context* ctx, secp256k1_pubkey pubkey);
+ static std::string ChecksumEncode(std::string hashedPubKeyString);
 
 private:
  static bool GenerateRandomPrivateKey(secp256k1_context* ctx, unsigned char seckey[32]);
