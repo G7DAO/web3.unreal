@@ -1,5 +1,7 @@
 #include "HyperPlayLibrary.h"
 
+#include "Web3RequestBuilder.h"
+
 DEFINE_LOG_CATEGORY(HyperPlayLibraryLog);
 
 UHyperPlayLibrary::UHyperPlayLibrary(const FObjectInitializer& ObjectInitializer) 
@@ -87,29 +89,26 @@ void UHyperPlayLibrary::BuildLocalRequest(TSharedPtr<FJsonObject> requestObject)
 }
 
 void UHyperPlayLibrary::CallRpcEndpoint() {
-	FHttpRequestRef Request = FHttpModule::Get().CreateRequest();
 
-	Request->SetURL(this->url);
-	Request->SetVerb(TEXT("POST"));
-	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
-	Request->SetHeader(TEXT("Accept"), TEXT("application/json"));
-
-	TSharedPtr<FJsonValue> emptyRequestValue = this->CreateJsonValue(TEXT("{}"));
-	TSharedPtr<FJsonObject> requestObject = emptyRequestValue->AsObject();
-
-	FString OutputString;
-	if (this->url.Equals(TEXT("http://localhost:9680/rpc"))) {
-		this->BuildLocalRequest(requestObject);
-		TSharedRef<FCondensedJsonStringWriter> Writer = FCondensedJsonStringWriterFactory::Create(&OutputString);
-		FJsonSerializer::Serialize(requestObject.ToSharedRef(), Writer);
+	if(url == "http://localhost:9680/rpc")
+	{
+		FWeb3RequestBuilder<FWeb3RPCRequest> RPCRequest;
+		RPCRequest.Url = "http://localhost:9680/rpc";
+		RPCRequest.Request = request;
+		RPCRequest.ChainID = chainIdVar;
+		RPCRequest.ChainMetadataVar = chainMetadataVar;
+		RPCRequest.ParamsStrVar = paramsStrVar;
+		RPCRequest.OnCompleteDelegate.BindUObject(this, &UHyperPlayLibrary::OnResponse);
+		RPCRequest.ExecuteRequest();
+	
+		return;
 	}
-	else {
-		OutputString = this->request;
-	}
-
-	Request->SetContentAsString(OutputString);
-	Request->OnProcessRequestComplete().BindUObject(this, &UHyperPlayLibrary::OnResponse);
-	Request->ProcessRequest();
+	
+	FWeb3RequestBuilder<FWeb3PExternalRPCRequest> ExternalRPCRequest;
+	ExternalRPCRequest.Url = url;
+	ExternalRPCRequest.ChainID = chainIdVar;
+	ExternalRPCRequest.RequestString = request;
+	ExternalRPCRequest.ExecuteRequest();
 }
 
 UHyperPlayLibrary* UHyperPlayLibrary::PostToRpc(const UObject* WorldContextObject, UHyperPlayLibrary* BlueprintNode, FString request, int32 chainId, FString chainMetadata, FString url, FString params)
