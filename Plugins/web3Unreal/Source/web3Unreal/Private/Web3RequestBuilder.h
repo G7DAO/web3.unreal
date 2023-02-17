@@ -58,7 +58,7 @@ protected:
 };
 
 // TODO For when implementing the call contract request 
-class FWeb3SendTransactionRequest {};
+class FWeb3CallContractRequest {};
 
 template <typename RequestPolicy>
 class FWeb3RequestBuilder : public RequestPolicy
