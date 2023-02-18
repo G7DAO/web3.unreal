@@ -22,17 +22,8 @@ void FWeb3BaseRequest::InitializeRequest()
 	RequestObject = RequestBuilderUtils::CreateJsonValue(TEXT("{}"))->AsObject();
 	ChainObject = RequestBuilderUtils::CreateJsonValue(TEXT("{}"))->AsObject();
 	ChainObject->SetField(TEXT("chainId"), MakeShared<FJsonValueString>(FString::FromInt(ChainID)));
-}
 
-void FWeb3BaseRequest::FinalizeRequest() const
-{
-	Request->OnProcessRequestComplete() = OnCompleteDelegate;
-	Request->SetContentAsString(HttpContentString);
-	Request->ProcessRequest();
-}
-
-void FWeb3RPCRequest::BuildRequest()
-{
+	// Can this be present in all requests???
 	if(!ChainMetadataVar.IsEmpty())
 	{
 		const TSharedPtr<FJsonValue> ChainMetaDataValue = RequestBuilderUtils::CreateJsonValue(ChainMetadataVar);
@@ -46,7 +37,17 @@ void FWeb3RPCRequest::BuildRequest()
 	}
 
 	RequestObject->SetField(TEXT("chain"), MakeShared<FJsonValueObject>(ChainObject));
+}
 
+void FWeb3BaseRequest::FinalizeRequest() const
+{
+	Request->OnProcessRequestComplete() = OnCompleteDelegate;
+	Request->SetContentAsString(HttpContentString);
+	Request->ProcessRequest();
+}
+
+void FWeb3RPCRequest::BuildRequest()
+{
 	if(!Request.IsEmpty())
 	{
 		const TSharedPtr<FJsonValue> RPCRequestValue = RequestBuilderUtils::CreateJsonValue(Request);

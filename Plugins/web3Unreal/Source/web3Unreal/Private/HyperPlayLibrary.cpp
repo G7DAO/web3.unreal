@@ -49,66 +49,28 @@ TSharedPtr<FJsonValue> UHyperPlayLibrary::CreateJsonValue(FString obj) {
 
 void UHyperPlayLibrary::ExecuteOnResponse(){}
 
-typedef TJsonWriterFactory<TCHAR, TCondensedJsonPrintPolicy<TCHAR>> FCondensedJsonStringWriterFactory;
-typedef TJsonWriter<TCHAR, TCondensedJsonPrintPolicy<TCHAR>> FCondensedJsonStringWriter;
-
-void UHyperPlayLibrary::BuildLocalRequest(TSharedPtr<FJsonObject> requestObject) {
-	//chain
-	TSharedPtr<FJsonValue> emptyChainValue = this->CreateJsonValue(TEXT("{}"));
-	TSharedPtr<FJsonObject> chainObject = emptyChainValue->AsObject();
-	chainObject->SetField(TEXT("chainId"), MakeShared<FJsonValueString>(FString::FromInt(this->chainIdVar)));
-
-	if (!this->chainMetadataVar.Equals(TEXT(""))) {
-		TSharedPtr<FJsonValue> chainMetadataObject = this->CreateJsonValue(this->chainMetadataVar);
-		if (!chainMetadataObject.IsValid()) {
-			UE_LOG(HyperPlayLibraryLog, Error, TEXT("Could not parse chain metadata"));
-			return;
-		}
-		chainObject->SetField(TEXT("chainMetadata"), chainMetadataObject);
-	}
-
-	requestObject->SetField(TEXT("chain"), MakeShared<FJsonValueObject>(chainObject));
-
-	//request
-	TSharedPtr<FJsonValue> rpcRequestObject = this->CreateJsonValue(this->request);
-	if (!rpcRequestObject.IsValid()) {
-		UE_LOG(HyperPlayLibraryLog, Error, TEXT("Could not parse the rpc request"));
-		return;
-	}
-	requestObject->SetField(TEXT("request"), rpcRequestObject);
-
-	//params
-	if (!this->paramsStrVar.Equals(TEXT(""))) {
-		TSharedPtr<FJsonValue> rpcParamsObject = this->CreateJsonValue(this->paramsStrVar);
-		if (!rpcParamsObject.IsValid()) {
-			UE_LOG(HyperPlayLibraryLog, Error, TEXT("Could not parse the rpc params"));
-			return;
-		}
-		requestObject->SetField(TEXT("params"), rpcParamsObject);
-	}
-}
-
 void UHyperPlayLibrary::CallRpcEndpoint() {
 
 	if(url == "http://localhost:9680/rpc")
 	{
-		FWeb3RequestBuilder<FWeb3RPCRequest> RPCRequest;
-		RPCRequest.Url = "http://localhost:9680/rpc";
-		RPCRequest.Request = request;
-		RPCRequest.ChainID = chainIdVar;
-		RPCRequest.ChainMetadataVar = chainMetadataVar;
-		RPCRequest.ParamsStrVar = paramsStrVar;
-		RPCRequest.OnCompleteDelegate.BindUObject(this, &UHyperPlayLibrary::OnResponse);
-		RPCRequest.ExecuteRequest();
+		FWeb3RequestBuilder<FWeb3RPCRequest> RequestBuilder;
+		RequestBuilder.Url = "http://localhost:9680/rpc";
+		RequestBuilder.Request = request;
+		RequestBuilder.ChainID = chainIdVar;
+		RequestBuilder.ChainMetadataVar = chainMetadataVar;
+		RequestBuilder.ParamsStrVar = paramsStrVar;
+		RequestBuilder.OnCompleteDelegate.BindUObject(this, &UHyperPlayLibrary::OnResponse);
+		RequestBuilder.ExecuteRequest();
 	
 		return;
 	}
 	
-	FWeb3RequestBuilder<FWeb3PExternalRPCRequest> ExternalRPCRequest;
-	ExternalRPCRequest.Url = url;
-	ExternalRPCRequest.ChainID = chainIdVar;
-	ExternalRPCRequest.RequestString = request;
-	ExternalRPCRequest.ExecuteRequest();
+	FWeb3RequestBuilder<FWeb3PExternalRPCRequest> RequestBuilder;
+	RequestBuilder.Url = url;
+	RequestBuilder.ChainID = chainIdVar;
+	RequestBuilder.RequestString = request;
+	RequestBuilder.OnCompleteDelegate.BindUObject(this, &UHyperPlayLibrary::OnResponse);
+	RequestBuilder.ExecuteRequest();
 }
 
 UHyperPlayLibrary* UHyperPlayLibrary::PostToRpc(const UObject* WorldContextObject, UHyperPlayLibrary* BlueprintNode, FString request, int32 chainId, FString chainMetadata, FString url, FString params)
@@ -123,51 +85,18 @@ UHyperPlayLibrary* UHyperPlayLibrary::PostToRpc(const UObject* WorldContextObjec
 	return BlueprintNode;
 }
 
-
 void UHyperPlayLibrary::CallSendContractEndpoint() {
-	FHttpRequestRef Request = FHttpModule::Get().CreateRequest();
-
-	Request->SetURL(TEXT("http://localhost:9680/sendContract"));
-	Request->SetVerb(TEXT("POST"));
-	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
-	Request->SetHeader(TEXT("Accept"), TEXT("application/json"));
-
-	TSharedPtr<FJsonValue> emptyRequestValue = this->CreateJsonValue(TEXT("{}"));
-	TSharedPtr<FJsonObject> requestObject = emptyRequestValue->AsObject();
-
-	TSharedPtr<FJsonValue> emptyChainValue = this->CreateJsonValue(TEXT("{}"));
-
-	TSharedPtr<FJsonObject> chainObject = emptyChainValue->AsObject();
-	chainObject->SetField(TEXT("chainId"), MakeShared<FJsonValueString>(FString::FromInt(this->chainIdVar)));
-	requestObject->SetField(TEXT("chain"), MakeShared<FJsonValueObject>(chainObject));
-	// above is same as rpc. consider refactoring into separate method
-
-	requestObject->SetField(TEXT("contractAddress"), MakeShared<FJsonValueString>(this->contractAddressVar));
-	requestObject->SetField(TEXT("functionName"), MakeShared<FJsonValueString>(this->functionNameVar));
-	requestObject->SetField(TEXT("valueInWei"), MakeShared<FJsonValueString>(this->valueInWeiVar));
-	if (this->gasLimitVar > 0) {
-		requestObject->SetField(TEXT("gasLimit"), MakeShared<FJsonValueString>(FString::FromInt(this->gasLimitVar)));
-	}
-
-	//passed as an FString but should call the endpoint with Array<AbiItem>
-	TSharedPtr<FJsonValue> abiItems = this->CreateJsonValue(this->abiVar);
-	requestObject->SetField(TEXT("abi"), abiItems);
-
-	TArray<TSharedPtr<FJsonValue>> paramsValueArray;
-	for (const FString val : this->paramsVar) {
-		TSharedPtr<FJsonValue> param = MakeShared<FJsonValueString>(val);
-		paramsValueArray.Add(param);
-	}
-	requestObject->SetField(TEXT("params"), MakeShared<FJsonValueArray>(paramsValueArray));
-	
-
-	// below is same as rpc. consider refactoring into separate method
-	FString OutputString;
-	TSharedRef<FCondensedJsonStringWriter> Writer = FCondensedJsonStringWriterFactory::Create(&OutputString);
-	FJsonSerializer::Serialize(requestObject.ToSharedRef(), Writer);
-	Request->SetContentAsString(OutputString);
-	Request->OnProcessRequestComplete().BindUObject(this, &UHyperPlayLibrary::OnResponse);
-	Request->ProcessRequest();
+	FWeb3RequestBuilder<FWeb3SendContractRequest> RequestBuilder;
+	RequestBuilder.Url = "http://localhost:9680/sendContract";
+	RequestBuilder.ParamsVar = paramsVar;
+	RequestBuilder.ChainID = chainIdVar;
+	RequestBuilder.ContractAddressVar = contractAddressVar;
+	RequestBuilder.FunctionNameVar = functionNameVar;
+	RequestBuilder.GasLimitVar = gasLimitVar;
+	RequestBuilder.ABIVar = abiVar;
+	RequestBuilder.ValueInWeiVar = valueInWeiVar;
+	RequestBuilder.OnCompleteDelegate.BindUObject(this, &UHyperPlayLibrary::OnResponse);
+	RequestBuilder.ExecuteRequest();
 }
 
 UHyperPlayLibrary* UHyperPlayLibrary::PostToSendContract(

@@ -9,6 +9,7 @@ public:
 
 	FString Url;
 	int32 ChainID;
+	FString ChainMetadataVar;
 	FHttpRequestCompleteDelegate OnCompleteDelegate;
 
 protected:
@@ -30,7 +31,6 @@ class FWeb3RPCRequest : public FWeb3BaseRequest
 public:
 	FString Request;
 	FString ParamsStrVar;
-	FString ChainMetadataVar;
 protected:
 	virtual void BuildRequest() override;
 };
