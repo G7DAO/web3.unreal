@@ -4,7 +4,7 @@
 #include "./HyperPlayLibrary.h"
 #include "CallContract.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPinSendContract, FString, Response, int32, StatusCode);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPinCallContract, FString, Response, int32, StatusCode);
 
 UCLASS()
 class WEB3UNREAL_API UCallContract : public UHyperPlayLibrary
@@ -13,7 +13,7 @@ class WEB3UNREAL_API UCallContract : public UHyperPlayLibrary
 
 public:
 	UPROPERTY(BlueprintAssignable)
-	FTxnReturnOutputPinSendContract OnResponseOutput;
+	FTxnReturnOutputPinCallContract OnResponseOutput;
 
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "web3.unreal|generic")
 	static UCallContract* CallContract(
