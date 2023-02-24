@@ -13,7 +13,6 @@ void Web3RPCRequestSpec::Define()
 		LatentIt("GetAccount RPC", EAsyncExecution::TaskGraph, FTimespan(0, 0, 30), [this](const FDoneDelegate TestDone)
 		{
 			FWeb3RequestBuilder<FWeb3RPCRequest> RequestBuilder;
-			RequestBuilder.Url = "http://localhost:9680/rpc";
 			RequestBuilder.Request = TEXT("{\"method\":\"eth_accounts\"}");
 			RequestBuilder.ChainID = 5;
 			RequestBuilder.ChainMetadataVar = "";

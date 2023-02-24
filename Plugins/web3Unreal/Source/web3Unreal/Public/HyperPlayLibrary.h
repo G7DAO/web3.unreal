@@ -35,7 +35,19 @@ public:
 		FString valueInWei,
 		int32 chainId
 	);
-
+	static UHyperPlayLibrary* PostToCallContract(
+		const UObject* WorldContextObject,
+		UHyperPlayLibrary* BlueprintNode,
+		FString contractAddress,
+		FString functionName,
+		FString abi,
+		TArray<FString> params,
+		int32 gasLimit,
+		FString valueInWei,
+		int32 chainId,
+		FString chainMetadata
+	);
+	
 	UPROPERTY(BlueprintAssignable)
 		FTxnFailedOutputPin OnFailure;
 
@@ -53,6 +65,7 @@ private:
 	void OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 	void CallRpcEndpoint();
 	void CallSendContractEndpoint();
+	void CallContractEndpoint();
 	bool StatusCodeIsSuccess(int32 statusCode);
 
 private:

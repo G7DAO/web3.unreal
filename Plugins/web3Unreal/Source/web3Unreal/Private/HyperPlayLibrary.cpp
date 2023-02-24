@@ -54,7 +54,6 @@ void UHyperPlayLibrary::CallRpcEndpoint() {
 	if(url == "http://localhost:9680/rpc")
 	{
 		FWeb3RequestBuilder<FWeb3RPCRequest> RequestBuilder;
-		RequestBuilder.Url = "http://localhost:9680/rpc";
 		RequestBuilder.Request = request;
 		RequestBuilder.ChainID = chainIdVar;
 		RequestBuilder.ChainMetadataVar = chainMetadataVar;
@@ -65,7 +64,7 @@ void UHyperPlayLibrary::CallRpcEndpoint() {
 		return;
 	}
 	
-	FWeb3RequestBuilder<FWeb3PExternalRPCRequest> RequestBuilder;
+	FWeb3RequestBuilder<FWeb3ExternalRPCRequest> RequestBuilder;
 	RequestBuilder.Url = url;
 	RequestBuilder.ChainID = chainIdVar;
 	RequestBuilder.RequestString = request;
@@ -87,9 +86,22 @@ UHyperPlayLibrary* UHyperPlayLibrary::PostToRpc(const UObject* WorldContextObjec
 
 void UHyperPlayLibrary::CallSendContractEndpoint() {
 	FWeb3RequestBuilder<FWeb3SendContractRequest> RequestBuilder;
-	RequestBuilder.Url = "http://localhost:9680/sendContract";
 	RequestBuilder.ParamsVar = paramsVar;
 	RequestBuilder.ChainID = chainIdVar;
+	RequestBuilder.ContractAddressVar = contractAddressVar;
+	RequestBuilder.FunctionNameVar = functionNameVar;
+	RequestBuilder.GasLimitVar = gasLimitVar;
+	RequestBuilder.ABIVar = abiVar;
+	RequestBuilder.ValueInWeiVar = valueInWeiVar;
+	RequestBuilder.OnCompleteDelegate.BindUObject(this, &UHyperPlayLibrary::OnResponse);
+	RequestBuilder.ExecuteRequest();
+}
+
+void UHyperPlayLibrary::CallContractEndpoint() {
+	FWeb3RequestBuilder<FWeb3CallContractRequest> RequestBuilder;
+	RequestBuilder.ParamsVar = paramsVar;
+	RequestBuilder.ChainID = chainIdVar;
+	RequestBuilder.ChainMetadataVar = chainMetadataVar;
 	RequestBuilder.ContractAddressVar = contractAddressVar;
 	RequestBuilder.FunctionNameVar = functionNameVar;
 	RequestBuilder.GasLimitVar = gasLimitVar;
@@ -122,6 +134,31 @@ UHyperPlayLibrary* UHyperPlayLibrary::PostToSendContract(
 	return BlueprintNode;
 }
 
+UHyperPlayLibrary* UHyperPlayLibrary::PostToCallContract(
+	const UObject* WorldContextObject,
+	UHyperPlayLibrary* BlueprintNode,
+	FString contractAddress,
+	FString functionName,
+	FString abi,
+	TArray<FString> params,
+	int32 gasLimit,
+	FString valueInWei,
+	int32 chainId,
+	FString chainMetadata)
+{
+	BlueprintNode->WorldContextObjectVar = WorldContextObject;
+	BlueprintNode->contractAddressVar = contractAddress;
+	BlueprintNode->functionNameVar = functionName;
+	BlueprintNode->abiVar = abi;
+	BlueprintNode->paramsVar = params;
+	BlueprintNode->valueInWeiVar = valueInWei;
+	BlueprintNode->gasLimitVar = gasLimit;
+	BlueprintNode->chainIdVar = chainId;
+	BlueprintNode->chainMetadataVar = chainMetadata;
+	BlueprintNode->endpoint = TEXT("callContract");
+	return BlueprintNode;
+}
+
 void UHyperPlayLibrary::Activate()
 {
 	// Any safety checks should be performed here. Check here validity of all your pointers etc.
@@ -132,7 +169,10 @@ void UHyperPlayLibrary::Activate()
 	if (endpoint.Equals(TEXT("rpc"))) {
 		this->CallRpcEndpoint();
 	}
-	else {
+	else if (endpoint.Equals(TEXT("sendContract"))){
 		this->CallSendContractEndpoint();
+	}
+	else {
+		this->CallContractEndpoint();
 	}
 }

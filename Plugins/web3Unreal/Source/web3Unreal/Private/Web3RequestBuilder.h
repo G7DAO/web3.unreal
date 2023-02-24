@@ -6,8 +6,7 @@ class FWeb3BaseRequest
 {
 public:
 	virtual ~FWeb3BaseRequest() = default;
-
-	FString Url;
+	
 	int32 ChainID;
 	FString ChainMetadataVar;
 	FHttpRequestCompleteDelegate OnCompleteDelegate;
@@ -20,6 +19,7 @@ protected:
 	typedef TJsonWriterFactory<TCHAR, TCondensedJsonPrintPolicy<TCHAR>> FCondensedJsonStringWriterFactory;
 	typedef TJsonWriter<TCHAR, TCondensedJsonPrintPolicy<TCHAR>> FCondensedJsonStringWriter;
 
+	FString RequestUrl;
 	TSharedPtr<FJsonObject> RequestObject;
 	TSharedPtr<FJsonObject> ChainObject;
 	FString HttpContentString;
@@ -35,9 +35,10 @@ protected:
 	virtual void BuildRequest() override;
 };
 
-class FWeb3PExternalRPCRequest : public FWeb3BaseRequest
+class FWeb3ExternalRPCRequest : public FWeb3BaseRequest
 {
 public:
+	FString Url;
 	FString RequestString;
 protected:
 	virtual void BuildRequest() override;
@@ -58,7 +59,12 @@ protected:
 };
 
 // TODO For when implementing the call contract request 
-class FWeb3CallContractRequest {};
+class FWeb3CallContractRequest : public FWeb3SendContractRequest 
+{
+protected:
+	virtual void BuildRequest() override;
+
+};
 
 template <typename RequestPolicy>
 class FWeb3RequestBuilder : public RequestPolicy
