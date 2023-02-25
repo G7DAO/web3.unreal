@@ -30,7 +30,7 @@ class FWeb3RPCRequest : public FWeb3BaseRequest
 {
 public:
 	FString Request;
-	FString ParamsStrVar;
+	FString ParamsStr;
 protected:
 	virtual void BuildRequest() override;
 };

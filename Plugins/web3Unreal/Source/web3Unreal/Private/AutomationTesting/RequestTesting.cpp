@@ -16,7 +16,6 @@ void Web3RPCRequestSpec::Define()
 			RequestBuilder.Request = TEXT("{\"method\":\"eth_accounts\"}");
 			RequestBuilder.ChainID = 5;
 			RequestBuilder.ChainMetadataVar = "";
-			RequestBuilder.ParamsStrVar = "";
 			RequestBuilder.OnCompleteDelegate.BindRaw(this, &Web3RPCRequestSpec::OnRequestResponse, TestDone);
 			RequestBuilder.ExecuteRequest();
 		});

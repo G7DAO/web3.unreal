@@ -1,20 +1,23 @@
 #include "GetAccounts.h"
 
-UGetAccounts::UGetAccounts(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
-}
+#include "Web3RequestBuilder.h"
 
 UGetAccounts* UGetAccounts::GetAccounts(const UObject* WorldContextObject, int32 chainId, FString chainMetadata) {
+	UGetAccounts* AccountsInstance = NewObject<UGetAccounts>();
 
-	UGetAccounts* BlueprintNode = NewObject<UGetAccounts>();
-	UGetAccounts* getAcctNode = (UGetAccounts*)PostToRpc(WorldContextObject, BlueprintNode, TEXT("{\"method\":\"eth_accounts\"}"), chainId, chainMetadata, TEXT("http://localhost:9680/rpc"), "");
-	return getAcctNode;
+	FWeb3RequestBuilder<FWeb3RPCRequest> RequestBuilder;
+	RequestBuilder.Request = TEXT("{\"method\":\"eth_accounts\"}");
+	RequestBuilder.ChainID = chainId;
+	RequestBuilder.ChainMetadataVar = chainMetadata;
+	RequestBuilder.OnCompleteDelegate.BindUObject(AccountsInstance, &UHyperplayAsyncRequest::OnResponse);
+	RequestBuilder.ExecuteRequest();
+
+	return AccountsInstance;
 }
 
 void UGetAccounts::ProcessResponse(FHttpResponsePtr Response, int32 statusCode) {
-	FString ResponseText = Response->GetContentAsString();
-	const TArray<TSharedPtr<FJsonValue>> xx = this->CreateJsonValue(ResponseText)->AsArray();
+	const FString ResponseText = Response->GetContentAsString();
+	const TArray<TSharedPtr<FJsonValue>> xx = UHyperPlayLibrary::CreateJsonValue(ResponseText)->AsArray();
 	if (xx.Num() > 0) {
 		OnResponseOutput.Broadcast(xx[0]->AsString(), statusCode);
 	}

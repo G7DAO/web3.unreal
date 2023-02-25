@@ -4,14 +4,15 @@
 #include "Json.h"
 #include "Runtime/Online/HTTP/Public/Http.h"
 #include "./HyperPlayLibrary.h"
+#include "HyperplayAsyncRequest.h"
 #include "SendContract.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPinSendContract, FString, Response, int32, StatusCode);
 
 UCLASS()
-class WEB3UNREAL_API USendContract : public UHyperPlayLibrary
+class WEB3UNREAL_API USendContract : public UHyperplayAsyncRequest
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 
 public:
 	UPROPERTY(BlueprintAssignable)

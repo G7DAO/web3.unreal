@@ -2,14 +2,15 @@
 
 #include "Runtime/Online/HTTP/Public/Http.h"
 #include "./HyperPlayLibrary.h"
+#include "HyperplayAsyncRequest.h"
 #include "CallContract.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPinCallContract, FString, Response, int32, StatusCode);
 
 UCLASS()
-class WEB3UNREAL_API UCallContract : public UHyperPlayLibrary
+class WEB3UNREAL_API UCallContract : public UHyperplayAsyncRequest
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 
 public:
 	UPROPERTY(BlueprintAssignable)

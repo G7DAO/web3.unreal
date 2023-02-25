@@ -1,9 +1,6 @@
 #include "SendContract.h"
 
-USendContract::USendContract(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
-}
+#include "Web3RequestBuilder.h"
 
 USendContract* USendContract::SendContract(
 	const UObject* WorldContextObject,
@@ -14,21 +11,24 @@ USendContract* USendContract::SendContract(
 	int32 gasLimit,
 	FString valueInWei,
 	int32 chainId) {
+	
+	USendContract* SendContractInstance = NewObject<USendContract>();
 
-	USendContract* BlueprintNode = NewObject<USendContract>();
-	USendContract* getAcctNode = (USendContract*)PostToSendContract(WorldContextObject,
-		BlueprintNode,
-		contractAddress,
-		functionName,
-		abi,
-		params,
-		gasLimit,
-		valueInWei,
-		chainId);
-	return getAcctNode;
+	FWeb3RequestBuilder<FWeb3SendContractRequest> RequestBuilder;
+	RequestBuilder.ParamsVar = params;
+	RequestBuilder.ChainID = chainId;
+	RequestBuilder.ContractAddressVar = contractAddress;
+	RequestBuilder.FunctionNameVar = functionName;
+	RequestBuilder.GasLimitVar = gasLimit;
+	RequestBuilder.ABIVar = abi;
+	RequestBuilder.ValueInWeiVar = valueInWei;
+	RequestBuilder.OnCompleteDelegate.BindUObject(SendContractInstance, &UHyperplayAsyncRequest::OnResponse);
+	RequestBuilder.ExecuteRequest();
+	
+	return SendContractInstance;
 }
 
 void USendContract::ProcessResponse(FHttpResponsePtr Response, int32 statusCode) {
-	FString ResponseText = Response->GetContentAsString();
+	const FString ResponseText = Response->GetContentAsString();
 	OnResponseOutput.Broadcast(ResponseText, statusCode);
 }

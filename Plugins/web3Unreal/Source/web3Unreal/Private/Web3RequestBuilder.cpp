@@ -34,7 +34,7 @@ void FWeb3BaseRequest::InitializeRequest()
 	
 		ChainObject->SetField(TEXT("chainMetadata"), ChainMetaDataValue);
 	}
-
+	
 	RequestObject->SetField(TEXT("chain"), MakeShared<FJsonValueObject>(ChainObject));
 }
 
@@ -60,6 +60,12 @@ void FWeb3RPCRequest::BuildRequest()
 		}
 
 		RequestObject->SetField(TEXT("request"), RPCRequestValue);
+	}
+
+	if(!ParamsStr.IsEmpty())
+	{
+		const TSharedPtr<FJsonValue> Params = MakeShared<FJsonValueString>(ParamsStr);
+		RequestObject->SetField(TEXT("params"), Params);
 	}
 	
 	TSharedRef<FCondensedJsonStringWriter> Writer = FCondensedJsonStringWriterFactory::Create(&HttpContentString);

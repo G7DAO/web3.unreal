@@ -1,9 +1,6 @@
 ﻿#include "CallContract.h"
 
-UCallContract::UCallContract(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
-}
+#include "Web3RequestBuilder.h"
 
 UCallContract* UCallContract::CallContract(
 	const UObject* WorldContextObject,
@@ -16,23 +13,25 @@ UCallContract* UCallContract::CallContract(
 	int32 chainId,
 	FString chainMetadata)
 {
-	UCallContract* BlueprintNode = NewObject<UCallContract>();
-	UCallContract* callContractNode = (UCallContract*)PostToCallContract(WorldContextObject,
-		BlueprintNode,
-		contractAddress,
-		functionName,
-		abi,
-		params,
-		gasLimit,
-		valueInWei,
-		chainId,
-		chainMetadata);
+	UCallContract* CallContractInstance = NewObject<UCallContract>();
+
+	FWeb3RequestBuilder<FWeb3CallContractRequest> RequestBuilder;
+	RequestBuilder.ParamsVar = params;
+	RequestBuilder.ChainID = chainId;
+	RequestBuilder.ChainMetadataVar = chainMetadata;
+	RequestBuilder.ContractAddressVar = contractAddress;
+	RequestBuilder.FunctionNameVar = functionName;
+	RequestBuilder.GasLimitVar = gasLimit;
+	RequestBuilder.ABIVar = abi;
+	RequestBuilder.ValueInWeiVar = valueInWei;
+	RequestBuilder.OnCompleteDelegate.BindUObject(CallContractInstance, &UHyperplayAsyncRequest::OnResponse);
+	RequestBuilder.ExecuteRequest();
 	
-	return callContractNode;
+	return CallContractInstance;
 }
 
 void UCallContract::ProcessResponse(FHttpResponsePtr Response, int32 statusCode)
 {
-	FString ResponseText = Response->GetContentAsString();
+	const FString ResponseText = Response->GetContentAsString();
 	OnResponseOutput.Broadcast(ResponseText, statusCode);
 }
