@@ -1,4 +1,4 @@
-#include "GetAccounts.h"
+#include "Endpoints/GetAccounts.h"
 #include "HyperPlayLibrary.h"
 
 UGetAccounts* UGetAccounts::GetAccounts(const UObject* WorldContextObject, int32 chainId, FString chainMetadata) {

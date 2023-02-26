@@ -1,4 +1,4 @@
-#include "SendContract.h"
+#include "Endpoints/SendContract.h"
 
 USendContract* USendContract::SendContract(
 	const UObject* WorldContextObject,

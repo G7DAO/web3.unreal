@@ -1,4 +1,4 @@
-﻿#include "CallContract.h"
+﻿#include "Endpoints/CallContract.h"
 
 #include "Web3RequestBuilder.h"
 

@@ -1,5 +1,5 @@
-﻿#include "CallContract.h"
-#include "GetAccounts.h"
+﻿#include "Endpoints/CallContract.h"
+#include "Endpoints/GetAccounts.h"
 #include "Misc/AutomationTest.h"
 
 BEGIN_DEFINE_SPEC(Web3RPCRequestSpec, "Web3Unreal.HyperplayRequests", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::ApplicationContextMask);

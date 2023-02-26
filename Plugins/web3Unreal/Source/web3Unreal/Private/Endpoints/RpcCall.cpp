@@ -1,4 +1,4 @@
-#include "RpcCall.h"
+#include "Endpoints/RpcCall.h"
 
 URpcCall* URpcCall::RpcCall(const UObject* WorldContextObject, FString request, int32 chainId, FString chainMetadata, FString url, FString Params) {
 
