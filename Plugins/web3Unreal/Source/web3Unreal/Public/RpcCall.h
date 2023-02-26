@@ -1,9 +1,5 @@
 #pragma once
-
-#include "Kismet/BlueprintAsyncActionBase.h"
-#include "Json.h"
-#include "Runtime/Online/HTTP/Public/Http.h"
-#include "./HyperPlayLibrary.h"
+#include "Web3RequestBuilder.h"
 #include "HyperplayAsyncRequest.h"
 #include "RpcCall.generated.h"
 
@@ -21,6 +17,13 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "web3.unreal|generic")
 	static URpcCall* RpcCall(const UObject* WorldContextObject, FString request, int32 chainId = 1, FString chainMetadata = "", FString url = "http://localhost:9680/rpc", FString Params = "");
 
+	virtual void Activate() override;
+	
 protected:
 	virtual void ProcessResponse(FHttpResponsePtr Response, int32 statusCode) override;
+
+private:
+	using InternalRPC = FWeb3RequestBuilder<FWeb3RPCRequest>;
+	using ExternalRPC = FWeb3RequestBuilder<FWeb3ExternalRPCRequest>;
+	TVariant<InternalRPC, ExternalRPC> RequestBuilder;
 };

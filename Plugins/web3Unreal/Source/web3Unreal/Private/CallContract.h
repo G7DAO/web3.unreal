@@ -3,6 +3,7 @@
 #include "Runtime/Online/HTTP/Public/Http.h"
 #include "./HyperPlayLibrary.h"
 #include "HyperplayAsyncRequest.h"
+#include "Web3RequestBuilder.h"
 #include "CallContract.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPinCallContract, FString, Response, int32, StatusCode);
@@ -13,9 +14,6 @@ class WEB3UNREAL_API UCallContract : public UHyperplayAsyncRequest
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintAssignable)
-	FTxnReturnOutputPinCallContract OnResponseOutput;
-
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "web3.unreal|generic")
 	static UCallContract* CallContract(
 		const UObject* WorldContextObject,
@@ -29,6 +27,14 @@ public:
 		FString chainMetadata = ""
 		);
 
+	virtual void Activate() override;
+	
 protected:
 	virtual void ProcessResponse(FHttpResponsePtr Response, int32 statusCode) override;
+
+private:
+	UPROPERTY(BlueprintAssignable, meta = (AllowPrivateAccess=true))
+	FTxnReturnOutputPinCallContract OnResponseOutput;
+	
+	FWeb3RequestBuilder<FWeb3CallContractRequest> RequestBuilder;
 };

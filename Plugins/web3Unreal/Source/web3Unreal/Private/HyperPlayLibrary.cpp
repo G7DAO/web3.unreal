@@ -1,7 +1,5 @@
 #include "HyperPlayLibrary.h"
 
-#include "Web3RequestBuilder.h"
-
 DEFINE_LOG_CATEGORY(HyperPlayLibraryLog);
 
 TSharedPtr<FJsonValue> UHyperPlayLibrary::CreateJsonValue(FString obj) {

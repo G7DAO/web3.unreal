@@ -91,16 +91,22 @@ void FWeb3SendContractRequest::BuildRequest()
 		RequestObject->SetField(TEXT("gasLimit"), MakeShared<FJsonValueString>(FString::FromInt(GasLimitVar)));
 	}
 
-	const TSharedPtr<FJsonValue> ABI = RequestBuilderUtils::CreateJsonValue(ABIVar);
-	RequestObject->SetField(TEXT("abi"), ABI);
-
-	TArray<TSharedPtr<FJsonValue>> ParamsValueArray;
-	for (const FString& val : ParamsVar) {
-		TSharedPtr<FJsonValue> param = MakeShared<FJsonValueString>(val);
-		ParamsValueArray.Add(param);
+	if(!ABIVar.IsEmpty())
+	{
+		const TSharedPtr<FJsonValue> ABI = RequestBuilderUtils::CreateJsonValue(ABIVar);
+		RequestObject->SetField(TEXT("abi"), ABI);	
 	}
+
+	if(ParamsVar.Num() > 0)
+	{
+		TArray<TSharedPtr<FJsonValue>> ParamsValueArray;
+		for (const FString& val : ParamsVar) {
+			TSharedPtr<FJsonValue> param = MakeShared<FJsonValueString>(val);
+			ParamsValueArray.Add(param);
+		}
 	
-	RequestObject->SetField(TEXT("params"), MakeShared<FJsonValueArray>(ParamsValueArray));
+		RequestObject->SetField(TEXT("params"), MakeShared<FJsonValueArray>(ParamsValueArray));
+	}
 
 	TSharedRef<FCondensedJsonStringWriter> Writer = FCondensedJsonStringWriterFactory::Create(&HttpContentString);
 	FJsonSerializer::Serialize(RequestObject.ToSharedRef(), Writer);

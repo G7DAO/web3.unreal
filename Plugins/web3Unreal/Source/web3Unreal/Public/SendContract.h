@@ -1,9 +1,5 @@
 #pragma once
-
-#include "Kismet/BlueprintAsyncActionBase.h"
-#include "Json.h"
-#include "Runtime/Online/HTTP/Public/Http.h"
-#include "./HyperPlayLibrary.h"
+#include "Web3RequestBuilder.h"
 #include "HyperplayAsyncRequest.h"
 #include "SendContract.generated.h"
 
@@ -15,9 +11,6 @@ class WEB3UNREAL_API USendContract : public UHyperplayAsyncRequest
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintAssignable)
-	FTxnReturnOutputPinSendContract OnResponseOutput;
-
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "web3.unreal|generic")
 		static USendContract* SendContract(
 			const UObject* WorldContextObject,
@@ -30,6 +23,14 @@ public:
 			int32 chainId = 1
 		);
 
+	virtual void Activate() override;
+	
 protected:
 	virtual void ProcessResponse(FHttpResponsePtr Response, int32 statusCode) override;
+
+private:
+	UPROPERTY(BlueprintAssignable, meta = (AllowPrivateAccess=true))
+	FTxnReturnOutputPinSendContract OnResponseOutput;
+	
+	FWeb3RequestBuilder<FWeb3SendContractRequest> RequestBuilder;
 };

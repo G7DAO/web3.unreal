@@ -1,21 +1,24 @@
 #include "GetAccounts.h"
-
-#include "Web3RequestBuilder.h"
+#include "HyperPlayLibrary.h"
 
 UGetAccounts* UGetAccounts::GetAccounts(const UObject* WorldContextObject, int32 chainId, FString chainMetadata) {
 	UGetAccounts* AccountsInstance = NewObject<UGetAccounts>();
-
-	FWeb3RequestBuilder<FWeb3RPCRequest> RequestBuilder;
-	RequestBuilder.Request = TEXT("{\"method\":\"eth_accounts\"}");
-	RequestBuilder.ChainID = chainId;
-	RequestBuilder.ChainMetadataVar = chainMetadata;
-	RequestBuilder.OnCompleteDelegate.BindUObject(AccountsInstance, &UHyperplayAsyncRequest::OnResponse);
-	RequestBuilder.ExecuteRequest();
+	AccountsInstance->RequestBuilder.Request = TEXT("{\"method\":\"eth_accounts\"}");
+	AccountsInstance->RequestBuilder.ChainID = chainId;
+	AccountsInstance->RequestBuilder.ChainMetadataVar = chainMetadata;
+	AccountsInstance->RequestBuilder.OnCompleteDelegate.BindUObject(AccountsInstance, &UHyperplayAsyncRequest::OnResponse);
 
 	return AccountsInstance;
 }
 
+void UGetAccounts::Activate()
+{
+	RequestBuilder.ExecuteRequest();	
+}
+
 void UGetAccounts::ProcessResponse(FHttpResponsePtr Response, int32 statusCode) {
+	Super::ProcessResponse(Response, statusCode);
+	
 	const FString ResponseText = Response->GetContentAsString();
 	const TArray<TSharedPtr<FJsonValue>> xx = UHyperPlayLibrary::CreateJsonValue(ResponseText)->AsArray();
 	if (xx.Num() > 0) {

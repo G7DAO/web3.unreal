@@ -1,7 +1,5 @@
 #include "SendContract.h"
 
-#include "Web3RequestBuilder.h"
-
 USendContract* USendContract::SendContract(
 	const UObject* WorldContextObject,
 	FString contractAddress,
@@ -14,21 +12,26 @@ USendContract* USendContract::SendContract(
 	
 	USendContract* SendContractInstance = NewObject<USendContract>();
 
-	FWeb3RequestBuilder<FWeb3SendContractRequest> RequestBuilder;
-	RequestBuilder.ParamsVar = params;
-	RequestBuilder.ChainID = chainId;
-	RequestBuilder.ContractAddressVar = contractAddress;
-	RequestBuilder.FunctionNameVar = functionName;
-	RequestBuilder.GasLimitVar = gasLimit;
-	RequestBuilder.ABIVar = abi;
-	RequestBuilder.ValueInWeiVar = valueInWei;
-	RequestBuilder.OnCompleteDelegate.BindUObject(SendContractInstance, &UHyperplayAsyncRequest::OnResponse);
-	RequestBuilder.ExecuteRequest();
+	SendContractInstance->RequestBuilder.ParamsVar = params;
+	SendContractInstance->RequestBuilder.ChainID = chainId;
+	SendContractInstance->RequestBuilder.ContractAddressVar = contractAddress;
+	SendContractInstance->RequestBuilder.FunctionNameVar = functionName;
+	SendContractInstance->RequestBuilder.GasLimitVar = gasLimit;
+	SendContractInstance->RequestBuilder.ABIVar = abi;
+	SendContractInstance->RequestBuilder.ValueInWeiVar = valueInWei;
+	SendContractInstance->RequestBuilder.OnCompleteDelegate.BindUObject(SendContractInstance, &UHyperplayAsyncRequest::OnResponse);
+	SendContractInstance->RequestBuilder.ExecuteRequest();
 	
 	return SendContractInstance;
 }
 
+void USendContract::Activate()
+{
+	RequestBuilder.ExecuteRequest();
+}
+
 void USendContract::ProcessResponse(FHttpResponsePtr Response, int32 statusCode) {
+	Super::ProcessResponse(Response, statusCode);
 	const FString ResponseText = Response->GetContentAsString();
 	OnResponseOutput.Broadcast(ResponseText, statusCode);
 }

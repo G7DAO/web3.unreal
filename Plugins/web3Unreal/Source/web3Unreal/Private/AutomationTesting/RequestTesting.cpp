@@ -1,9 +1,10 @@
-﻿#include "Web3RequestBuilder.h"
-#include "Interfaces/IHttpResponse.h"
+﻿#include "CallContract.h"
+#include "GetAccounts.h"
 #include "Misc/AutomationTest.h"
 
-BEGIN_DEFINE_SPEC(Web3RPCRequestSpec, "Web3Unreal.Web3RPCRequestSpec", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::ApplicationContextMask);
-void OnRequestResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful, const FDoneDelegate);
+BEGIN_DEFINE_SPEC(Web3RPCRequestSpec, "Web3Unreal.HyperplayRequests", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::ApplicationContextMask);
+void OnResponse(FString Response, int32 StatusCode);
+FDoneDelegate TestDoneDelegate;
 END_DEFINE_SPEC(Web3RPCRequestSpec)
 
 void Web3RPCRequestSpec::Define()
@@ -12,39 +13,60 @@ void Web3RPCRequestSpec::Define()
 	{
 		LatentIt("GetAccount RPC", EAsyncExecution::TaskGraph, FTimespan(0, 0, 30), [this](const FDoneDelegate TestDone)
 		{
-			FWeb3RequestBuilder<FWeb3RPCRequest> RequestBuilder;
-			RequestBuilder.Request = TEXT("{\"method\":\"eth_accounts\"}");
-			RequestBuilder.ChainID = 5;
-			RequestBuilder.ChainMetadataVar = "";
-			RequestBuilder.OnCompleteDelegate.BindRaw(this, &Web3RPCRequestSpec::OnRequestResponse, TestDone);
-			RequestBuilder.ExecuteRequest();
+			TestDoneDelegate = TestDone;
+			UGetAccounts* GetAccountsInstance = UGetAccounts::GetAccounts(nullptr, 5, "");
+			GetAccountsInstance->GetOnCompletedDelegate().AddRaw(this, &Web3RPCRequestSpec::OnResponse);
+			GetAccountsInstance->Activate();
 		});
 	});
 }
 
-void Web3RPCRequestSpec::OnRequestResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful, const FDoneDelegate TestDone)
+void Web3RPCRequestSpec::OnResponse(FString Response, int32 StatusCode)
 {
-	FString ResponseText;
-	
-	if (bWasSuccessful) {
-		const int32 statusCode = Response->GetResponseCode();
-
-		if (!(statusCode > 199 && statusCode < 300))
-		{
-			bWasSuccessful = false;
-		}
-
-		if(bWasSuccessful)
-		{
-			 ResponseText = Response->GetContentAsString();
-
-			// JSON parsing
-			TSharedPtr<FJsonValue> ParsedJSON;
-			TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(ResponseText);
-			FJsonSerializer::Deserialize(Reader, ParsedJSON);
-		}
+	bool bWasSuccessful = true;
+	if (!(StatusCode > 199 && StatusCode < 300))
+	{
+		bWasSuccessful = false;
 	}
 
-	TestTrue("Web3 Request run successfully!", bWasSuccessful && !ResponseText.IsEmpty());
-	TestDone.Execute();
+	TestTrue("Web3RPC Request run successfully!", bWasSuccessful);
+	TestDoneDelegate.Execute();
+}
+
+BEGIN_DEFINE_SPEC(Web3CallContract, "Web3Unreal.HyperplayRequests", EAutomationTestFlags::ProductFilter | EAutomationTestFlags::ApplicationContextMask);
+void OnResponse(FString Response, int32 StatusCode);
+FDoneDelegate TestDoneDelegate;
+END_DEFINE_SPEC(Web3CallContract)
+
+void Web3CallContract::Define()
+{
+	Describe("Execute CallContract request tests (make sure to connect to HyperPlay before running test)", [this]()
+	{
+		LatentIt("CallContract Call", EAsyncExecution::TaskGraph, FTimespan(0, 0, 30), [this](const FDoneDelegate TestDone)
+		{
+			TestDoneDelegate = TestDone;
+			UCallContract* GetAccountsInstance = UCallContract::CallContract(nullptr,
+				"0xBA62BCfcAaFc6622853cca2BE6Ac7d845BC0f2Dc",
+				"totalSupply",
+				"",
+				{},
+				-1,
+				"",
+				5);
+			GetAccountsInstance->GetOnCompletedDelegate().AddRaw(this, &Web3CallContract::OnResponse);
+			GetAccountsInstance->Activate();
+		});
+	});
+}
+
+void Web3CallContract::OnResponse(FString Response, int32 StatusCode)
+{
+	bool bWasSuccessful = true;
+	if (!(StatusCode > 199 && StatusCode < 300))
+	{
+		bWasSuccessful = false;
+	}
+
+	TestTrue("CallContract Request run successfully!", bWasSuccessful);
+	TestDoneDelegate.Execute();
 }

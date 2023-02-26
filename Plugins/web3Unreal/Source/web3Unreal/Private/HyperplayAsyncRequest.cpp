@@ -14,8 +14,6 @@ namespace
 
 void UHyperplayAsyncRequest::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
-	UE_LOG(LogTemp, Warning, TEXT("bWasSuccessful = %hs"), bWasSuccessful ? "true" : "false");
-	
 	if (bWasSuccessful) {
 		const int32 statusCode = Response->GetResponseCode();
 		if (!StatusCodeIsSuccess(statusCode))
@@ -40,5 +38,6 @@ void UHyperplayAsyncRequest::OnResponse(FHttpRequestPtr Request, FHttpResponsePt
 
 void UHyperplayAsyncRequest::ProcessResponse(FHttpResponsePtr Response, int32 statusCode)
 {
+	OnCompleted.Broadcast(Response->GetContentAsString(), statusCode);
 }
 
