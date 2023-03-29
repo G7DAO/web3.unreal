@@ -20,7 +20,6 @@ USendContract* USendContract::SendContract(
 	SendContractInstance->RequestBuilder.ABIVar = abi;
 	SendContractInstance->RequestBuilder.ValueInWeiVar = valueInWei;
 	SendContractInstance->RequestBuilder.OnCompleteDelegate.BindUObject(SendContractInstance, &UHyperplayAsyncRequest::OnResponse);
-	SendContractInstance->RequestBuilder.ExecuteRequest();
 	
 	return SendContractInstance;
 }

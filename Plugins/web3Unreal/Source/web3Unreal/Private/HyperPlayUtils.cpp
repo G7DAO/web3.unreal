@@ -1,8 +1,6 @@
-#include "HyperPlayLibrary.h"
+#include "HyperPlayUtils.h"
 
-DEFINE_LOG_CATEGORY(HyperPlayLibraryLog);
-
-TSharedPtr<FJsonValue> UHyperPlayLibrary::CreateJsonValue(FString obj) {
+TSharedPtr<FJsonValue> HyperPlayUtils::CreateJsonValue(FString obj) {
 	TSharedPtr<FJsonValue> val;
 	TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(obj);
 	FJsonSerializer::Deserialize(Reader, val);

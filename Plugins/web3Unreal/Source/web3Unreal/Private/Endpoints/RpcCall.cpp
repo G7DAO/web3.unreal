@@ -12,7 +12,6 @@ URpcCall* URpcCall::RpcCall(const UObject* WorldContextObject, FString request, 
 		RpcCallInstance->RequestBuilder.Get<InternalRPC>().ChainMetadataVar = chainMetadata;
 		RpcCallInstance->RequestBuilder.Get<InternalRPC>().ParamsStr = Params;
 		RpcCallInstance->RequestBuilder.Get<InternalRPC>().OnCompleteDelegate.BindUObject(RpcCallInstance, &UHyperplayAsyncRequest::OnResponse);
-		RpcCallInstance->RequestBuilder.Get<InternalRPC>().ExecuteRequest();
 	
 		return RpcCallInstance;
 	}
@@ -23,7 +22,6 @@ URpcCall* URpcCall::RpcCall(const UObject* WorldContextObject, FString request, 
 	RpcCallInstance->RequestBuilder.Get<ExternalRPC>().RequestString = request;
 	RpcCallInstance->RequestBuilder.Get<ExternalRPC>().ChainMetadataVar = chainMetadata;
 	RpcCallInstance->RequestBuilder.Get<ExternalRPC>().OnCompleteDelegate.BindUObject(RpcCallInstance, &UHyperplayAsyncRequest::OnResponse);
-	RpcCallInstance->RequestBuilder.Get<ExternalRPC>().ExecuteRequest();
 	
 	return RpcCallInstance;
 }

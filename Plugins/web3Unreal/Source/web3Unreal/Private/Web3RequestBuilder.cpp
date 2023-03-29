@@ -1,15 +1,6 @@
 ﻿#include "Web3RequestBuilder.h"
 #include "Runtime/Online/HTTP/Public/Http.h"
-
-namespace RequestBuilderUtils
-{
-	TSharedPtr<FJsonValue> CreateJsonValue(FString obj) {
-		TSharedPtr<FJsonValue> val;
-		const TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(obj);
-		FJsonSerializer::Deserialize(Reader, val);
-		return val;
-	}
-}
+#include "HyperPlayUtils.h"
 
 void FWeb3BaseRequest::InitializeRequest()
 {
@@ -18,14 +9,14 @@ void FWeb3BaseRequest::InitializeRequest()
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 	Request->SetHeader(TEXT("Accept"), TEXT("application/json"));
 
-	RequestObject = RequestBuilderUtils::CreateJsonValue(TEXT("{}"))->AsObject();
-	ChainObject = RequestBuilderUtils::CreateJsonValue(TEXT("{}"))->AsObject();
+	RequestObject = HyperPlayUtils::CreateJsonValue(TEXT("{}"))->AsObject();
+	ChainObject = HyperPlayUtils::CreateJsonValue(TEXT("{}"))->AsObject();
 	ChainObject->SetField(TEXT("chainId"), MakeShared<FJsonValueString>(FString::FromInt(ChainID)));
 
 	// Can this be present in all requests???
 	if(!ChainMetadataVar.IsEmpty())
 	{
-		const TSharedPtr<FJsonValue> ChainMetaDataValue = RequestBuilderUtils::CreateJsonValue(ChainMetadataVar);
+		const TSharedPtr<FJsonValue> ChainMetaDataValue = HyperPlayUtils::CreateJsonValue(ChainMetadataVar);
 		if(!ChainMetaDataValue.IsValid())
 		{
 			UE_LOG(LogTemp, Error, TEXT("Could not parse chain metadata"));
@@ -43,6 +34,7 @@ void FWeb3BaseRequest::FinalizeRequest() const
 	Request->SetURL(RequestUrl);
 	Request->OnProcessRequestComplete() = OnCompleteDelegate;
 	Request->SetContentAsString(HttpContentString);
+	UE_LOG(LogTemp, Warning, TEXT("Processing request in web3baserequest finalize request for %s"), *HttpContentString)
 	Request->ProcessRequest();
 }
 
@@ -52,7 +44,7 @@ void FWeb3RPCRequest::BuildRequest()
 	
 	if(!Request.IsEmpty())
 	{
-		const TSharedPtr<FJsonValue> RPCRequestValue = RequestBuilderUtils::CreateJsonValue(Request);
+		const TSharedPtr<FJsonValue> RPCRequestValue = HyperPlayUtils::CreateJsonValue(Request);
 		if(!RPCRequestValue.IsValid())
 		{
 			UE_LOG(LogTemp, Error, TEXT("Could not parse the rpc request"));
@@ -93,8 +85,8 @@ void FWeb3SendContractRequest::BuildRequest()
 
 	if(!ABIVar.IsEmpty())
 	{
-		const TSharedPtr<FJsonValue> ABI = RequestBuilderUtils::CreateJsonValue(ABIVar);
-		RequestObject->SetField(TEXT("abi"), ABI);	
+		const TSharedPtr<FJsonValue> ABI = HyperPlayUtils::CreateJsonValue(ABIVar);
+		RequestObject->SetField(TEXT("abi"), ABI);
 	}
 
 	if(ParamsVar.Num() > 0)

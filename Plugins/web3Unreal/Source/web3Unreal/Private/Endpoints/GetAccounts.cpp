@@ -1,5 +1,5 @@
 #include "Endpoints/GetAccounts.h"
-#include "HyperPlayLibrary.h"
+#include "HyperPlayUtils.h"
 
 UGetAccounts* UGetAccounts::GetAccounts(const UObject* WorldContextObject, int32 chainId, FString chainMetadata) {
 	UGetAccounts* AccountsInstance = NewObject<UGetAccounts>();
@@ -20,7 +20,7 @@ void UGetAccounts::ProcessResponse(FHttpResponsePtr Response, int32 statusCode) 
 	Super::ProcessResponse(Response, statusCode);
 	
 	const FString ResponseText = Response->GetContentAsString();
-	const TArray<TSharedPtr<FJsonValue>> accountsArray = UHyperPlayLibrary::CreateJsonValue(ResponseText)->AsArray();
+	const TArray<TSharedPtr<FJsonValue>> accountsArray = HyperPlayUtils::CreateJsonValue(ResponseText)->AsArray();
 	if (accountsArray.Num() > 0) {
 		OnResponseOutput.Broadcast(accountsArray[0]->AsString(), statusCode);
 	}

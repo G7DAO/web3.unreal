@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "Runtime/Online/HTTP/Public/Http.h"
-#include "./HyperPlayLibrary.h"
 #include "HyperplayAsyncRequest.h"
 #include "Web3RequestBuilder.h"
 #include "CallContract.generated.h"
