@@ -1,0 +1,3 @@
+[submodule "UE5_1_1"]
+	path = UE5_1_1
+	url = https://github.com/EpicGames/UnrealEngine.git
