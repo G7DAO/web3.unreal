@@ -1,4 +1,4 @@
-﻿#include "HyperplayAsyncRequest.h"
+﻿#include "Endpoints/HyperplayAsyncRequest.h"
 
 namespace
 {
