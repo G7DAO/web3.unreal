@@ -17,7 +17,7 @@ jobs:
           submodules: "recursive"
           token: ${{ secrets.pat }}
       - name: Run Engine Setup
-        run: call ${{ github.workspace }}/UE5_1_1/Setup.bat
+        run: cmd.exe /c ${{ github.workspace }}/UE5_1_1/Setup.bat
       - name: Build Plugin
         run: ${{ github.workspace }}/UE5_1_1/Engine/Build/BatchFiles/RunUAT.bat BuildPlugin -Plugin=${{ github.workspace }}/Plugins/web3Unreal/web3Unreal.uplugin -Package=${{ github.workspace }}/packagedPlugins/5.1.1 -TargetPlatforms=Win64 -unattended -crash -Rocket
       - name: Upload Precompiled Plugin
