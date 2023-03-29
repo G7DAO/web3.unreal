@@ -20,9 +20,9 @@ void UGetAccounts::ProcessResponse(FHttpResponsePtr Response, int32 statusCode) 
 	Super::ProcessResponse(Response, statusCode);
 	
 	const FString ResponseText = Response->GetContentAsString();
-	const TArray<TSharedPtr<FJsonValue>> xx = UHyperPlayLibrary::CreateJsonValue(ResponseText)->AsArray();
-	if (xx.Num() > 0) {
-		OnResponseOutput.Broadcast(xx[0]->AsString(), statusCode);
+	const TArray<TSharedPtr<FJsonValue>> accountsArray = UHyperPlayLibrary::CreateJsonValue(ResponseText)->AsArray();
+	if (accountsArray.Num() > 0) {
+		OnResponseOutput.Broadcast(accountsArray[0]->AsString(), statusCode);
 	}
 	else {
 		OnResponseOutput.Broadcast(TEXT("ERROR: Account array was empty"), 400);
