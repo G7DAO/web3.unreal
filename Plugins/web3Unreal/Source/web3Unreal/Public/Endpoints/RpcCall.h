@@ -23,7 +23,7 @@ protected:
 	virtual void ProcessResponse(FHttpResponsePtr Response, int32 statusCode) override;
 
 private:
-	using InternalRPC = FWeb3RequestBuilder<FWeb3RPCRequest>;
-	using ExternalRPC = FWeb3RequestBuilder<FWeb3ExternalRPCRequest>;
+	using InternalRPC = FWeb3RPCRequest;
+	using ExternalRPC = FWeb3ExternalRPCRequest;
 	TVariant<InternalRPC, ExternalRPC> RequestBuilder;
 };

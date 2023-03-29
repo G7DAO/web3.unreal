@@ -10,11 +10,18 @@ public:
 	int32 ChainID;
 	FString ChainMetadataVar;
 	FHttpRequestCompleteDelegate OnCompleteDelegate;
+	
+	void ExecuteRequest()
+	{
+		InitializeRequest();
+		BuildRequest();
+		FinalizeRequest();
+	};
 
 protected:
 	void InitializeRequest();
-	void FinalizeRequest() const;
 	virtual void BuildRequest() = 0;
+	void FinalizeRequest() const;
 	
 	typedef TJsonWriterFactory<TCHAR, TCondensedJsonPrintPolicy<TCHAR>> FCondensedJsonStringWriterFactory;
 	typedef TJsonWriter<TCHAR, TCondensedJsonPrintPolicy<TCHAR>> FCondensedJsonStringWriter;
@@ -64,17 +71,5 @@ class FWeb3CallContractRequest : public FWeb3SendContractRequest
 protected:
 	virtual void BuildRequest() override;
 
-};
-
-template <typename RequestPolicy>
-class FWeb3RequestBuilder : public RequestPolicy
-{
-public:
-	void ExecuteRequest()
-	{
-		RequestPolicy::InitializeRequest();
-		RequestPolicy::BuildRequest();
-		RequestPolicy::FinalizeRequest();
-	};
 };
 

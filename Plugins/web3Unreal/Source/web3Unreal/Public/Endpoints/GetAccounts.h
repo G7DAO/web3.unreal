@@ -23,5 +23,5 @@ private:
 	UPROPERTY(BlueprintAssignable, meta = (AllowPrivateAccess=true))
 	FTxnReturnOutputPin OnResponseOutput;
 	
-	FWeb3RequestBuilder<FWeb3RPCRequest> RequestBuilder;
+	FWeb3RPCRequest RequestBuilder;
 };
