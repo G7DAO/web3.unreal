@@ -16,7 +16,8 @@ jobs:
         with:
           submodules: "recursive"
           token: ${{ secrets.pat }}
-      - run: $GITHUB_WORKSPACE/UE5_1_1/Engine/Build/BatchFiles/RunUAT.bat BuildPlugin -Plugin=$GITHUB_WORKSPACE/Plugins/web3Unreal/web3Unreal.uplugin -Package=$GITHUB_WORKSPACE/packagedPlugins/5.1.1 -TargetPlatforms=Win64 -unattended -crash -Rocket
+      - name: Build Plugin
+        run: ${{ github.workspace }}/UE5_1_1/Engine/Build/BatchFiles/RunUAT.bat BuildPlugin -Plugin=${{ github.workspace }}/Plugins/web3Unreal/web3Unreal.uplugin -Package=${{ github.workspace }}/packagedPlugins/5.1.1 -TargetPlatforms=Win64 -unattended -crash -Rocket
       - name: Upload Precompiled Plugin
         uses: actions/upload-artifact@v2
         with:
