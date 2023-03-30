@@ -22,7 +22,7 @@ void Web3CallContract::Define()
 			TestDoneDelegate = TestDone;
 			UCallContract* GetAccountsInstance = UCallContract::CallContract(nullptr,
 				"0xBA62BCfcAaFc6622853cca2BE6Ac7d845BC0f2Dc",
-				"totalSupply",
+				"name",
 				"",
 				{},
 				-1,
@@ -40,7 +40,7 @@ void Web3CallContract::OnResponse(FString Response, int32 StatusCode)
 
 	TestTrue("CallContract Request run successfully!", bWasSuccessful);
 	UE_LOG(LogTemp, Display, TEXT("CallContract Response: %s"), *Response);
-	const FString CorrectSupply("9723807911904703311227858998");
-	TestTrue("Total supply read correctly ", Response.Equals(CorrectSupply));
+	const FString CorrectName("FaucetToken");
+	TestTrue("Total supply read correctly ", Response.Equals(CorrectName));
 	TestDoneDelegate.Execute();
 }
