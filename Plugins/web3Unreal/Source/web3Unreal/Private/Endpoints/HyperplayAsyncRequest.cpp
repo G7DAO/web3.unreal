@@ -1,22 +1,12 @@
 ﻿#include "Endpoints/HyperplayAsyncRequest.h"
+#include "HyperPlayUtils.h"
 
-namespace
-{
-	bool StatusCodeIsSuccess(int32 statusCode)
-	{
-		if (statusCode > 199 && statusCode < 300)
-		{
-			return true;
-		}
-		return false;
-	}
-}
 
 void UHyperplayAsyncRequest::OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
 	if (bWasSuccessful) {
 		const int32 statusCode = Response->GetResponseCode();
-		if (!StatusCodeIsSuccess(statusCode))
+		if (!HyperPlayUtils::StatusCodeIsSuccess(statusCode))
 		{
 			this->OnFailure.Broadcast();
 			return;
@@ -38,6 +28,5 @@ void UHyperplayAsyncRequest::OnResponse(FHttpRequestPtr Request, FHttpResponsePt
 
 void UHyperplayAsyncRequest::ProcessResponse(FHttpResponsePtr Response, int32 statusCode)
 {
-	OnCompleted.Broadcast(Response->GetContentAsString(), statusCode);
 }
 

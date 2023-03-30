@@ -15,13 +15,13 @@ public:
 	static UGetAccounts* GetAccounts(const UObject* WorldContextObject, int32 chainId = 1, FString chainMetadata = "");
 
 	virtual void Activate() override;
+	
+	UPROPERTY(BlueprintAssignable, meta = (AllowPrivateAccess=true))
+	FTxnReturnOutputPin OnResponseOutput;
 
 protected:
 	virtual void ProcessResponse(FHttpResponsePtr Response, int32 statusCode) override;
 
 private:
-	UPROPERTY(BlueprintAssignable, meta = (AllowPrivateAccess=true))
-	FTxnReturnOutputPin OnResponseOutput;
-	
 	FWeb3RPCRequest RequestBuilder;
 };

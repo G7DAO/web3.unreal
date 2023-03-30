@@ -37,7 +37,6 @@ class FWeb3RPCRequest : public FWeb3BaseRequest
 {
 public:
 	FString Request;
-	FString ParamsStr;
 protected:
 	virtual void BuildRequest() override;
 };
@@ -70,6 +69,5 @@ class FWeb3CallContractRequest : public FWeb3SendContractRequest
 {
 protected:
 	virtual void BuildRequest() override;
-
 };
 

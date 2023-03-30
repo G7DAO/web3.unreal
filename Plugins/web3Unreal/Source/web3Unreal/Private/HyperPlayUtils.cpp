@@ -6,3 +6,12 @@ TSharedPtr<FJsonValue> HyperPlayUtils::CreateJsonValue(FString obj) {
 	FJsonSerializer::Deserialize(Reader, val);
 	return val;
 }
+
+bool HyperPlayUtils::StatusCodeIsSuccess(int32 statusCode)
+{
+	if (statusCode > 199 && statusCode < 300)
+	{
+		return true;
+	}
+	return false;
+}

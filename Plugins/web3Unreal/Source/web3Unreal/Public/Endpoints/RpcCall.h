@@ -15,7 +15,12 @@ public:
 	FTxnReturnOutputPinRpcCall OnResponseOutput;
 
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "web3.unreal|generic")
-	static URpcCall* RpcCall(const UObject* WorldContextObject, FString request, int32 chainId = 1, FString chainMetadata = "", FString url = "http://localhost:9680/rpc", FString Params = "");
+	static URpcCall* RpcCall(
+		const UObject* WorldContextObject,
+		FString request,
+		int32 chainId = 1,
+		FString chainMetadata = "",
+		FString url = "http://localhost:9680/rpc");
 
 	virtual void Activate() override;
 	

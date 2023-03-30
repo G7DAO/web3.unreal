@@ -1,6 +1,6 @@
 #include "Endpoints/RpcCall.h"
 
-URpcCall* URpcCall::RpcCall(const UObject* WorldContextObject, FString request, int32 chainId, FString chainMetadata, FString url, FString Params) {
+URpcCall* URpcCall::RpcCall(const UObject* WorldContextObject, FString request, int32 chainId, FString chainMetadata, FString url) {
 
 	URpcCall* RpcCallInstance = NewObject<URpcCall>();
 
@@ -10,7 +10,6 @@ URpcCall* URpcCall::RpcCall(const UObject* WorldContextObject, FString request, 
 		RpcCallInstance->RequestBuilder.Get<InternalRPC>().Request = request;
 		RpcCallInstance->RequestBuilder.Get<InternalRPC>().ChainID = chainId;
 		RpcCallInstance->RequestBuilder.Get<InternalRPC>().ChainMetadataVar = chainMetadata;
-		RpcCallInstance->RequestBuilder.Get<InternalRPC>().ParamsStr = Params;
 		RpcCallInstance->RequestBuilder.Get<InternalRPC>().OnCompleteDelegate.BindUObject(RpcCallInstance, &UHyperplayAsyncRequest::OnResponse);
 	
 		return RpcCallInstance;
@@ -42,4 +41,5 @@ void URpcCall::ProcessResponse(FHttpResponsePtr Response, int32 statusCode) {
 	Super::ProcessResponse(Response, statusCode);
 	const FString ResponseText = Response->GetContentAsString();
 	OnResponseOutput.Broadcast(ResponseText, statusCode);
+	OnCompleted.Broadcast(ResponseText, statusCode);
 }

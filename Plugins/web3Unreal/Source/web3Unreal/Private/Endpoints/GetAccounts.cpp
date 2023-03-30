@@ -16,15 +16,16 @@ void UGetAccounts::Activate()
 	RequestBuilder.ExecuteRequest();	
 }
 
-void UGetAccounts::ProcessResponse(FHttpResponsePtr Response, int32 statusCode) {
-	Super::ProcessResponse(Response, statusCode);
-	
+void UGetAccounts::ProcessResponse(FHttpResponsePtr Response, int32 statusCode) {	
 	const FString ResponseText = Response->GetContentAsString();
 	const TArray<TSharedPtr<FJsonValue>> accountsArray = HyperPlayUtils::CreateJsonValue(ResponseText)->AsArray();
 	if (accountsArray.Num() > 0) {
 		OnResponseOutput.Broadcast(accountsArray[0]->AsString(), statusCode);
+		OnCompleted.Broadcast(accountsArray[0]->AsString(), statusCode);
 	}
 	else {
-		OnResponseOutput.Broadcast(TEXT("ERROR: Account array was empty"), 400);
+		const auto errorMsg = TEXT("ERROR: Account array was empty");
+		OnResponseOutput.Broadcast(errorMsg, 400);
+		OnCompleted.Broadcast(errorMsg, 400);
 	}
 }

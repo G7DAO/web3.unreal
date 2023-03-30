@@ -37,4 +37,5 @@ void UCallContract::ProcessResponse(FHttpResponsePtr Response, int32 statusCode)
 	Super::ProcessResponse(Response, statusCode);
 	const FString ResponseText = Response->GetContentAsString();
 	OnResponseOutput.Broadcast(ResponseText, statusCode);
+	OnCompleted.Broadcast(ResponseText, statusCode);
 }
