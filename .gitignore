@@ -1,6 +1,8 @@
 # Visual Studio 2015 user specific files
 .vs/
 
+UE5_1_1
+
 # Rider C++
 Plugins/Developer/RiderLink/
 
