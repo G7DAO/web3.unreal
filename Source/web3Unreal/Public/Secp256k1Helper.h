@@ -4,6 +4,7 @@
 #include "Account.h"
 #include <string>
 #include <algorithm>
+#include <vector>
 #include "Secp256k1Helper.generated.h"
 
 
