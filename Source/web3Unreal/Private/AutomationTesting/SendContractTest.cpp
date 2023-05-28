@@ -36,6 +36,28 @@ void Web3SendContract::Define()
 			SendContractInstance->GetOnCompletedDelegate().AddRaw(this, &Web3SendContract::OnResponse);
 			SendContractInstance->Activate();
 		});
+			
+		LatentIt("SendContract Struct Param Async Node", EAsyncExecution::TaskGraph,
+			FTimespan(0, 0, 60),
+			[this](const FDoneDelegate TestDone)
+		{
+			TestDoneDelegate = TestDone;
+			const FString weaponid("0");
+			const FString weapon("[\"rifle\", \"1\", \"2\", \"3\"]");
+			TArray<FString> params;
+			params.Add(weaponid);
+			params.Add(weapon);
+			USendContract* SendContractInstance = USendContract::SendContract(nullptr,
+				"0x2e0Cb17ED5F24bfCBB30D61E195D90E06E388E1e",
+				"setWeapon",
+				"",
+				params,
+				-1,
+				"",
+				5);
+			SendContractInstance->GetOnCompletedDelegate().AddRaw(this, &Web3SendContract::OnResponse);
+			SendContractInstance->Activate();
+		});
 	});
 }
 
