@@ -16,12 +16,9 @@ public class web3Unreal : ModuleRules
 			return Path.Combine(ThirdPartyPath,"lib", "libsecp256k1.lib");
 		}
 
-		if (Target.Platform == UnrealTargetPlatform.Linux)
-		{
-			return Path.Combine(ThirdPartyPath,"lib", "libsecp256k1.a");
-		}
-
-		if (Target.Platform == UnrealTargetPlatform.Mac)
+		if (Target.Platform == UnrealTargetPlatform.Linux 
+		    || Target.Platform == UnrealTargetPlatform.LinuxArm64 
+		    || Target.Platform == UnrealTargetPlatform.Mac)
 		{
 			return Path.Combine(ThirdPartyPath,"lib", "libsecp256k1.a");
 		}
