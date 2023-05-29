@@ -60,7 +60,7 @@ static int fill_random(unsigned char data[], size_t size) {
         return 1;
     }
 #elif defined(__linux__) || defined(__FreeBSD__)
-    /* If `getrandom(2)` is not available you should fallback to /dev/urandom #1#
+    // If `getrandom(2)` is not available you should fallback to /dev/urandom 
     ssize_t res = getrandom(data, size, 0);
     if (res < 0 || (size_t)res != size ) {
         return 0;
@@ -68,8 +68,8 @@ static int fill_random(unsigned char data[], size_t size) {
         return 1;
     }
 #elif defined(__APPLE__) || defined(__OpenBSD__)
-    /* If `getentropy(2)` is not available you should fallback to either
-     * `SecRandomCopyBytes` or /dev/urandom #1#
+    // If `getentropy(2)` is not available you should fallback to either
+    // `SecRandomCopyBytes` or /dev/urandom 
     int res = getentropy(data, size);
     if (res == 0) {
         return 1;

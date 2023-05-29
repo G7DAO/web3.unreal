@@ -14,9 +14,9 @@ class UHyperplayAsyncRequest : public UBlueprintAsyncActionBase
 
 public:
 	FOnCompleted& GetOnCompletedDelegate() { return OnCompleted; }
+	virtual void OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 	
 protected:
-	virtual void OnResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 	virtual void ProcessResponse(FHttpResponsePtr Response, int32 statusCode);
 	
 	// Call from child class

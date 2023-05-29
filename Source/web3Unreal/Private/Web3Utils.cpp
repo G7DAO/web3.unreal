@@ -49,7 +49,8 @@ std::vector<unsigned char> UWeb3Utils::ByteArrayFromHexStr(FString hexString)
 		++iter;
 		if (!(iter != hexStringUpper.end()))
 		{
-			throw "Hex string is not made up of complete bytes!";
+			UE_LOG(LogTemp, Error, TEXT("Hex string is not made up of complete bytes!"))
+			return byteArray;
 		}
 
 		wchar_t char_iPlus1 = *iter;

@@ -62,7 +62,7 @@ void Secp256k1HelperTest::Define()
 			FString encodedAddrFString(encodedAddr.c_str());
 			UE_LOG(LogTemp, Display, TEXT("encoded address = %s"), *(encodedAddrFString));
 			std::string correctAddr = "28A826A70dfcBBa87621251DE22a055DA015C407";
-			TestTrue("address encoded correctly", encodedAddr._Equal(correctAddr));
+			TestTrue("address encoded correctly", encodedAddr == correctAddr);
 		});
 	});
 }
