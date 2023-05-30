@@ -1,4 +1,5 @@
-﻿#include "Endpoints/CallContract.h"
+﻿// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
+#include "Endpoints/CallContract.h"
 
 #include "Web3RequestBuilder.h"
 

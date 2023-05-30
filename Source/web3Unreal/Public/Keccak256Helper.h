@@ -1,3 +1,4 @@
+// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 #pragma once
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Byte2DArray.h"

@@ -1,3 +1,4 @@
+// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 #pragma once
 #include "Byte2DArray.generated.h"
 

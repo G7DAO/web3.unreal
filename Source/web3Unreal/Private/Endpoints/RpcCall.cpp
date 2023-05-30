@@ -1,3 +1,4 @@
+// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 #include "Endpoints/RpcCall.h"
 
 URpcCall* URpcCall::RpcCall(const UObject* WorldContextObject, FString request, int32 chainId, FString chainMetadata, FString url) {

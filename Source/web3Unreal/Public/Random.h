@@ -1,3 +1,4 @@
+// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 /*
  * This file is an attempt at collecting best practice methods for obtaining randomness with different operating systems.
  * It may be out-of-date. Consult the documentation of the operating system before considering to use the methods below.

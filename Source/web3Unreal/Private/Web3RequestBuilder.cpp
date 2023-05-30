@@ -1,4 +1,5 @@
-﻿#include "Web3RequestBuilder.h"
+﻿// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
+#include "Web3RequestBuilder.h"
 #include "Runtime/Online/HTTP/Public/Http.h"
 #include "HyperPlayUtils.h"
 

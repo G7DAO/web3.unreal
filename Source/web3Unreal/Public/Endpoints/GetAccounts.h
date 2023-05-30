@@ -1,3 +1,4 @@
+// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 #pragma once
 #include "HyperplayAsyncRequest.h"
 #include "Web3RequestBuilder.h"

@@ -1,4 +1,4 @@
-// Some copyright should be here...
+// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 
 using UnrealBuildTool;
 using System.IO;
