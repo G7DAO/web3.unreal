@@ -8,7 +8,7 @@
 	"CreatedBy": "Brett Cleary",
 	"CreatedByURL": "https://www.hyperplay.xyz/",
 	"DocsURL": "https://github.com/G7DAO/web3.unreal",
-	"MarketplaceURL": "",
+	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/3f84478590314fe995bde90d5531a66c",
 	"SupportURL": "https://discord.gg/Vx4ky6ZbAK",
 	"CanContainContent": true,
 	"IsBetaVersion": true,
@@ -18,7 +18,15 @@
 		{
 			"Name": "web3Unreal",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
+			"LoadingPhase": "PreLoadingScreen",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Linux",
+				"Mac"
+			],
+			"BlacklistPlatforms": [
+				"LinuxArm64"
+			]
 		}
 	]
 }
