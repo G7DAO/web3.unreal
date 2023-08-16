@@ -1,24 +1,33 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.0",
+	"VersionName": "0.1.0",
 	"FriendlyName": "web3Unreal",
 	"Description": "web3.unreal is the first plugin to bring true web3 functionality to desktop games built with Unreal Engine. Start making reads and writes to any EVM compatible blockchain in minutes with globally available async blueprint nodes. This project is made free and open source by Game7.",
 	"Category": "Other",
 	"CreatedBy": "Brett Cleary",
 	"CreatedByURL": "https://www.hyperplay.xyz/",
 	"DocsURL": "https://github.com/G7DAO/web3.unreal",
-	"MarketplaceURL": "",
+	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/3f84478590314fe995bde90d5531a66c",
 	"SupportURL": "https://discord.gg/Vx4ky6ZbAK",
 	"CanContainContent": true,
-	"IsBetaVersion": true,
+	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
+	"EngineVersion": "5.2.1",
 	"Modules": [
 		{
 			"Name": "web3Unreal",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
+			"LoadingPhase": "PreLoadingScreen",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Linux",
+				"Mac"
+			],
+			"BlacklistPlatforms": [
+				"LinuxArm64"
+			]
 		}
 	]
 }

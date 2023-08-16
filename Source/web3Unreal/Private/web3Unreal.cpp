@@ -1,3 +1,4 @@
+// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 #include "web3Unreal.h"
 
 #define LOCTEXT_NAMESPACE "Fweb3UnrealModule"

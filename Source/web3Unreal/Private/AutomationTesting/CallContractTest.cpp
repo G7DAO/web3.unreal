@@ -1,3 +1,4 @@
+// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 #include "Endpoints/CallContract.h"
 #include "Endpoints/GetAccounts.h"
 #include "Misc/AutomationTest.h"

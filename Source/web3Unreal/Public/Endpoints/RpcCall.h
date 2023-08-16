@@ -1,6 +1,8 @@
+// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 #pragma once
 #include "Web3RequestBuilder.h"
 #include "HyperplayAsyncRequest.h"
+#include "Misc/TVariant.h"
 #include "RpcCall.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPinRpcCall, FString, Response, int32, StatusCode);

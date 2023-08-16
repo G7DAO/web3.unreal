@@ -1,3 +1,4 @@
+// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 #include "Misc/AutomationTest.h"
 #include "Secp256k1Helper.h"
 #include "Tests/AutomationCommon.h"

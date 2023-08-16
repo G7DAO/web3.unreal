@@ -1,3 +1,4 @@
+// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 #include "Endpoints/GetAccounts.h"
 #include "HyperPlayUtils.h"
 

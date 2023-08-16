@@ -1,4 +1,5 @@
-﻿#include "Endpoints/HyperplayAsyncRequest.h"
+﻿// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
+#include "Endpoints/HyperplayAsyncRequest.h"
 #include "HyperPlayUtils.h"
 
 
