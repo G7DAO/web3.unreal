@@ -2,6 +2,10 @@
 #pragma once
 
 #include "HTTP/Public/Interfaces/IHttpRequest.h"
+#include "Serialization/JsonWriter.h"
+#include "Policies/CondensedJsonPrintPolicy.h"
+#include "Dom/JsonObject.h"
+#include "Templates/SharedPointer.h"
 
 class FWeb3BaseRequest
 {

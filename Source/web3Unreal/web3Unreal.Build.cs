@@ -51,6 +51,9 @@ public class web3Unreal : ModuleRules
 			new string[]
 			{
 				"Core",
+				"Json",
+				"Http",
+				"JsonUtilities"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -62,10 +65,7 @@ public class web3Unreal : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"Slate",
-				"SlateCore",
-				"Http",
-				"Json",
-				"JsonUtilities"
+				"SlateCore"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
