@@ -1,2 +1,0 @@
-HyperPlay Integrations
-=======================

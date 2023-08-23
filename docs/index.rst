@@ -14,7 +14,7 @@ Welcome to web3.unreal's documentation!
    Quickstart <quickstart>
    API <api>
    Examples <examples>
-   HyperPlay Integrations <hp>
+   HyperPlay Integrations <hyperplay/index>
    Contributing <contributing>
 
 
