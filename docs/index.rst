@@ -9,6 +9,10 @@ Welcome to web3.unreal's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   self
+   Our Philosophy <philosophy>
+   Quickstart <quickstart>
+
 
 
 Indices and tables
