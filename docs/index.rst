@@ -12,6 +12,10 @@ Welcome to web3.unreal's documentation!
    self
    Our Philosophy <philosophy>
    Quickstart <quickstart>
+   API <api>
+   Examples <examples>
+   HyperPlay Integrations <hp>
+   Contributing <contributing>
 
 
 
