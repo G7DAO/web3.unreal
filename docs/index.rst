@@ -1,5 +1,4 @@
-.. web3.unreal documentation master file, created by
-   sphinx-quickstart on Tue Aug 22 15:04:05 2023.
+.. web3.unreal documentation master file, created by sphinx-quickstart
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
@@ -18,3 +17,10 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Docs
+====
+
+.. doxygenclass:: UKeccak256Helper
+   :members:
+   :undoc-members:

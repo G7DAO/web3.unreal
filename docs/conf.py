@@ -16,6 +16,7 @@ author = 'Brett Cleary'
 extensions = [ "breathe" ]
 # Breathe Configuration
 breathe_default_project = "web3.unreal"
+breathe_projects = {"web3.unreal": "./xml"}
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
