@@ -11,15 +11,11 @@ Compile from source
 #. Create a directory in your app root called Plugins.
 #. Clone with
 
-```
-git clone https://github.com/G7DAO/web3.unreal.git ./Plugins/web3Unreal
-```
+``git clone https://github.com/G7DAO/web3.unreal.git ./Plugins/web3Unreal``
 
 or if your project uses git, add as a submodule with
 
-```
-git submodule add https://github.com/G7DAO/web3.unreal.git ./Plugins/web3Unreal
-```
+``git submodule add https://github.com/G7DAO/web3.unreal.git ./Plugins/web3Unreal``
 
 #. Generate Visual Studio project files
 
@@ -38,7 +34,7 @@ Get Balance
 
 First, let's get our rpc endpoint url so we can perform this call on the client or the server.
 
-Head over to https://app.infura.io and create an account.
+Go to https://app.infura.io and create an account.
 
 Once you have your chain specific Https url with api key, copy the following blueprint or c++ example to your project.
 
@@ -46,7 +42,7 @@ Before calling this function:
 
 #. Replace https://mainnet.infura.io/v3/<API_KEY> with your rpc url.
 
-#. Replace 0x638105AA1B69406560f6428aEFACe3DB9da83c64 with the public address whose balance you want to read
+#. Replace ``0x638105AA1B69406560f6428aEFACe3DB9da83c64`` with the public address whose balance you want to read
 
 
 .. tabs::
@@ -213,9 +209,9 @@ Before calling this function:
 
 The balance returned will be in hexadecimal. Once converted to decimal, the unit will be in wei.
 
-For example, hexadecimal 0x236a4c456ef7c0 to base10 is 9968499999832000
+For example, hexadecimal ``0x236a4c456ef7c0`` to base10 is ``9968499999832000``
 
-Base10 9968499999832000 wei to ETH is 0.009968499999832 ETH
+Base10 ``9968499999832000`` wei to ETH is ``0.009968499999832`` ETH
 
 Send Token
 ^^^^^^^^^^
@@ -224,9 +220,9 @@ Now let's request an ERC20 transfer client side from the HyperPlay connected wal
 
 Before calling this function:
 
-#. Replace 0x8a9f58dea0cf3d92dd8963f5a0a4c7aa9fa76642 with the contract address of the ERC20 token you wish to transfer
-#. Replace 0x638105AA1B69406560f6428aEFACe3DB9da83c64 with the public address you would like the HyperPlay connected wallet to send tokens too
-#. Replace 1230000000000000000 with the amount of tokens to send in WEI
+#. Replace ``0x8a9f58dea0cf3d92dd8963f5a0a4c7aa9fa76642`` with the contract address of the ERC20 token you wish to transfer
+#. Replace ``0x638105AA1B69406560f6428aEFACe3DB9da83c64`` with the public address you would like the HyperPlay connected wallet to send tokens too
+#. Replace ``1230000000000000000`` with the amount of tokens to send in WEI
 #. Replace the chain id (i.e. 1) in "chainId": "1" with the chain id that you would like to send the ERC20 tokens on
 
 .. tabs::
