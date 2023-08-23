@@ -13,7 +13,7 @@ author = 'Brett Cleary'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = [ "breathe" ]
+extensions = [ "breathe", "sphinx_tabs.tabs", "sphinx_copybutton" ]
 # Breathe Configuration
 breathe_default_project = "web3.unreal"
 breathe_projects = {"web3.unreal": "./xml"}
