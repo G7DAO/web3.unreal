@@ -1,3 +1,0 @@
-Formal Library Specification
-==============================
-

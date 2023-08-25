@@ -11,7 +11,7 @@ Welcome to web3.unreal's documentation!
    self
    Our Philosophy <philosophy>
    Quickstart <quickstart>
-   API <api>
+   API <api/index>
    Examples <examples/index>
    HyperPlay Integrations <hyperplay/index>
    Contributing <contributing>
@@ -25,9 +25,3 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-Docs
-====
-
-.. doxygenclass:: UKeccak256Helper
-   :members:
-   :undoc-members:
