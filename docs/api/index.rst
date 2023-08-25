@@ -10,3 +10,4 @@ Detailed Specification of Library
    Keccak256Helper.h <cppclasses/keccak256helper>
    Keccak256.h <cppclasses/keccak256>
    HyperPlayUtils.h <cppclasses/hyperplayutils>
+   Byte2DArray.h <cppclasses/byte2darray>
