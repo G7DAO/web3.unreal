@@ -3,9 +3,6 @@
 #include "Keccak256.h"
 #include "Web3Utils.h"
 
-/*
- * Hash text with Keccak256 into a 32 byte array
- */
 void UKeccak256Helper::Keccak256FStringToByteArray(FString data, uint8_t *dest)
 {
 	std::string msg;
@@ -17,9 +14,6 @@ void UKeccak256Helper::Keccak256FStringToByteArray(FString data, uint8_t *dest)
 	Keccak256::getHash(msgUint8, msg.length(), dest);
 }
 
-/*
- * Computes the Keccak256 hash of a text string
- */
 FString UKeccak256Helper::Keccak256(FString data) {
 	uint8_t dest[32] = { 0 };
 	Keccak256FStringToByteArray(data, dest);
@@ -28,9 +22,6 @@ FString UKeccak256Helper::Keccak256(FString data) {
 	return ret;
 }
 
-/*
- * Hash text with Keccak256 and return a 32 byte TArray
- */
 TArray<uint8> UKeccak256Helper::Keccak256Bytes(FString data) {
 	uint8_t dest[32] = { 0 };
 	Keccak256FStringToByteArray(data, dest);
@@ -39,9 +30,6 @@ TArray<uint8> UKeccak256Helper::Keccak256Bytes(FString data) {
 	return ret;
 }
 
-/*
- * Concatenates an array of byte arrays and then hashes the result
- */
 TArray<uint8> UKeccak256Helper::ConcatByteArraysAndKeccak256(TArray<FByte2DArray> byte2DArray)
 {
 	std::vector<uint8> msg;
