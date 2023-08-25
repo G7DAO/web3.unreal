@@ -13,7 +13,7 @@ Welcome to web3.unreal's documentation!
    Our Philosophy <philosophy>
    Quickstart <quickstart>
    API <api>
-   Examples <examples>
+   Examples <examples/index>
    HyperPlay Integrations <hyperplay/index>
    Contributing <contributing>
 

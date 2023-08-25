@@ -9,5 +9,4 @@ HyperPlay is a web3-native game launcher that enables players to carry their wal
 HyperPlay aims to reverse the de-platforming of developers and the monopolistic fees of web2. HyperPlay provides a web3-native game store and aggregate the Epic Store and GOG, providing developers with maximal freedom to choose the store that works best for them.
 GDC 2023 HyperPlay Presentation
 
-Watch this captivating presentation from GDC 2023 to learn why game developers and players are adopting HyperPlay.
-
+Watch `this captivating presentation from GDC 2023 <https://drive.google.com/file/d/13uWFZnovmdvQcqjtlfKrU5TSP7CsHvrO/view?pli=1>`_ to learn why game developers and players are adopting HyperPlay.

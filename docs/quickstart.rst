@@ -302,7 +302,7 @@ Finishing Up
 
 Call the Get Balance function again server side and you should see the new updated on-chain token balance.
 
-Congratulations! You just performed blockchain reads and writes client and server side in Unreal Engine with NO custodial wallets and NO external servers!
+**Congratulations! You just performed blockchain reads and writes client and server side in Unreal Engine with NO custodial wallets and NO external servers!**
 
 Next Steps
 -----------
