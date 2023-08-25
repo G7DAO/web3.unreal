@@ -5,13 +5,16 @@
 #pragma once
 
 /**
- * 2D Byte Array for Blueprints
+ * Byte Array object used for 2D byte arrays in Blueprints
  */
 USTRUCT(BlueprintType)
 struct WEB3UNREAL_API FByte2DArray
 {
 	GENERATED_BODY()
 
+	/**
+	* The byte array that this object holds.
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Web3.Unreal|Types")
 	TArray<uint8> data;
 

@@ -7,6 +7,9 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPinRpcCall, FString, Response, int32, StatusCode);
 
+/**
+* URpcCall is an async blueprint node used to call the HyperPlay /rpc local http server endpoint or another rpc provider
+*/
 UCLASS()
 class WEB3UNREAL_API URpcCall : public UHyperplayAsyncRequest
 {
@@ -16,6 +19,9 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FTxnReturnOutputPinRpcCall OnResponseOutput;
 
+	/**
+	* RpcCall is used to generate the request
+	*/
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "web3.unreal|generic")
 	static URpcCall* RpcCall(
 		const UObject* WorldContextObject,
@@ -24,6 +30,10 @@ public:
 		FString chainMetadata = "",
 		FString url = "http://localhost:9680/rpc");
 
+	/**
+	* Activate is used to execute the request.
+	* Called to trigger the action once the delegates have been bound
+	*/
 	virtual void Activate() override;
 	
 protected:

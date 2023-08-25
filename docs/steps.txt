@@ -1,0 +1,4 @@
+cd docs
+doxygen
+make clean html
+output is in _build/html/index.html

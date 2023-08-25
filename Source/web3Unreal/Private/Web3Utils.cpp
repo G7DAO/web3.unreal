@@ -1,9 +1,6 @@
 // Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 #include "Web3Utils.h"
 
-/*
- * Converts c style char array to c++ string representing the byte array in hex
- */
 std::string UWeb3Utils::hexStr(unsigned char* data, int len)
 {
 	std::string s(len * 2, ' ');
@@ -19,9 +16,6 @@ std::string UWeb3Utils::hexStr(std::vector<unsigned char> data)
 	return UWeb3Utils::hexStr(&data[0], data.size());
 }
 
-/*
- * Converts a string with hex chars representing a hex value to its corresponding byte array
- */
 std::vector<unsigned char> UWeb3Utils::ByteArrayFromHexStr(FString hexString)
 {
 	std::unordered_map<wchar_t, unsigned char> hexCharToByteMap = {
@@ -63,9 +57,7 @@ std::vector<unsigned char> UWeb3Utils::ByteArrayFromHexStr(FString hexString)
 	}
 	return byteArray;
 }
-/*
- * Converts TArray of bytes to c++ string representing the byte array in hex
- */
+
 FString UWeb3Utils::ByteArrayToFString(TArray<uint8> arr)
 {
 	std::vector<uint8> msg;

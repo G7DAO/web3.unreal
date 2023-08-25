@@ -13,7 +13,7 @@
 #include <cstdint>
 
 
- /*
+ /**
   * Computes the Keccak-256 hash of a sequence of bytes. The hash value is 32 bytes long.
   * Provides just one static method.
   */
@@ -23,7 +23,9 @@ public: static constexpr int HASH_LEN = 32;
 private: static constexpr int BLOCK_SIZE = 200 - HASH_LEN * 2;
 private: static constexpr int NUM_ROUNDS = 24;
 
-
+/**
+* Calculate the Keccak 256 hash of a byte array of length len and output the result in hashResult
+*/
 public: static void getHash(const std::uint8_t msg[], std::size_t len, std::uint8_t hashResult[HASH_LEN]);
 
 

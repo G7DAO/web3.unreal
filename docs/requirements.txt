@@ -1,0 +1,7 @@
+breathe
+# Sphinx<7.2 because we are waiting for
+#   https://github.com/breathe-doc/breathe/issues/943
+sphinx>=5.3,<7.2
+sphinx_rtd_theme
+sphinx-tabs
+sphinx-copybutton
