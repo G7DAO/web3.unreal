@@ -12,3 +12,4 @@ Detailed Specification of Library
    HyperPlayUtils.h <cppclasses/hyperplayutils>
    Byte2DArray.h <cppclasses/byte2darray>
    Account.h <cppclasses/account>
+   Endpoints <cppclasses/endpoints>

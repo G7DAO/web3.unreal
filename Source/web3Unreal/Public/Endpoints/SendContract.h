@@ -6,12 +6,18 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPinSendContract, FString, Response, int32, StatusCode);
 
+/**
+* USendContract is an async blueprint node used to call the HyperPlay /sendContract local http server endpoint
+*/
 UCLASS()
 class WEB3UNREAL_API USendContract : public UHyperplayAsyncRequest
 {
 	GENERATED_BODY()
 
 public:
+	/**
+	* SendContract is used to generate the request
+	*/
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "web3.unreal|generic")
 		static USendContract* SendContract(
 			const UObject* WorldContextObject,
@@ -24,6 +30,10 @@ public:
 			int32 chainId = 1
 		);
 
+	/**
+	* Activate is used to execute the request.
+	* Called to trigger the action once the delegates have been bound
+	*/
 	virtual void Activate() override;
 	
 protected:

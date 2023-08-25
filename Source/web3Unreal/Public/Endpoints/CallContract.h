@@ -8,12 +8,18 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTxnReturnOutputPinCallContract, FString, Response, int32, StatusCode);
 
+/**
+* UCallContract is an async blueprint node used to call the HyperPlay /callContract local http server endpoint
+*/
 UCLASS()
 class WEB3UNREAL_API UCallContract : public UHyperplayAsyncRequest
 {
 	GENERATED_BODY()
 
 public:
+	/**
+	* CallContract is used to generate the request
+	*/
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "web3.unreal|generic")
 	static UCallContract* CallContract(
 		const UObject* WorldContextObject,
@@ -27,6 +33,10 @@ public:
 		FString chainMetadata = ""
 		);
 
+	/**
+	* Activate is used to execute the request.
+	* Called to trigger the action once the delegates have been bound
+	*/
 	virtual void Activate() override;
 	
 protected:
