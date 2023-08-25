@@ -6,7 +6,6 @@ Welcome to web3.unreal's documentation!
 =======================================
 
 .. toctree::
-   :maxdepth: 2
    :caption: Contents:
 
    self
