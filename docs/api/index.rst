@@ -9,3 +9,4 @@ Detailed Specification of Library
    Random.h <cppclasses/random>
    Keccak256Helper.h <cppclasses/keccak256helper>
    Keccak256.h <cppclasses/keccak256>
+   HyperPlayUtils.h <cppclasses/hyperplayutils>
