@@ -45,7 +45,11 @@
 */
 
 
-/* Returns 1 on success, and 0 on failure. */
+/**
+* Currently rand() is used to fill the data array randomly for size number of bytes.
+* This is not cryptographically secure and work remains to integrate platform specific sources of randomness.
+* Returns 1 on success, and 0 on failure.
+*/
 static int fill_random(unsigned char data[], size_t size) {
     for (int i = 0; i < size; ++i)
     {
