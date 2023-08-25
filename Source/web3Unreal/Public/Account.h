@@ -3,7 +3,7 @@
 #include "Account.generated.h"
 
 /**
- * Eth account with private and public key
+ * Secp256k1 curve private and public key
  */
 USTRUCT(BlueprintType)
 struct WEB3UNREAL_API FAccount
@@ -11,9 +11,15 @@ struct WEB3UNREAL_API FAccount
 	GENERATED_BODY()
 
 public:
+	/**
+	* Private key as a hex string
+	*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Web3.Unreal|Types")
 	FString privateKey;
 
+	/**
+	* Public address as a hex string
+	*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Web3.Unreal|Types")
 	FString publicAddress;
 	
