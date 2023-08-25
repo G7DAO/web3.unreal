@@ -13,3 +13,4 @@ Detailed Specification of Library
    Byte2DArray.h <cppclasses/byte2darray>
    Account.h <cppclasses/account>
    Endpoints <cppclasses/endpoints>
+   Web3Utils.h <cppclasses/web3utils>
