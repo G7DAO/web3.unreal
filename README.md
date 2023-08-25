@@ -8,7 +8,9 @@ This project is free and open source. It will continue to evolve to fit your nee
 [<img alt="Twitter" src="https://img.shields.io/twitter/follow/espadrine.svg?style=for-the-badge&label=Twitter&color=1DA1F2" height="20">](https://twitter.com/HyperPlayGaming)
 
 ## Documentation
-https://docs.hyperplaygaming.com/
+
+Full documentation of every CPP header file can be found here along with a quickstart guide and common web3 functionality examples:
+https://web3unreal.readthedocs.io/en/latest/
 
 ## Installation
 Follow these instructions to install the web3.unreal plugin:
