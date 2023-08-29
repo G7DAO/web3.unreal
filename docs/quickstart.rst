@@ -369,6 +369,15 @@ Before calling this function:
             CustomProperties Pin (PinId=D1F25B2F4E08072BB3C2A6A29AB3B570,PinName="ReturnValue",PinToolTip="Return Value\nString\n\nConverts an integer value to a string",Direction="EGPD_Output",PinType.PinCategory="string",PinType.PinSubCategory="",PinType.PinSubCategoryObject=None,PinType.PinSubCategoryMemberReference=(),PinType.PinValueType=(),PinType.ContainerType=None,PinType.bIsReference=False,PinType.bIsConst=False,PinType.bIsWeakPointer=False,PinType.bIsUObjectWrapper=False,PinType.bSerializeAsSinglePrecisionFloat=False,LinkedTo=(K2Node_CommutativeAssociativeBinaryOperator_3 23330A804D41A9C19963C69FE61B92A5,),PersistentGuid=00000000000000000000000000000000,bHidden=False,bNotConnectable=False,bDefaultValueIsReadOnly=False,bDefaultValueIsIgnored=False,bAdvancedView=False,bOrphanedPin=False,)
             End Object
 
+In HyperPlay if the user has created a MetaMask Extension Account, it will appear like so:
+
+.. image:: images/MetaMaskFAUTokenTransferScreenshot.png
+  :width: 800
+  :alt: MetaMask transaction request to transfer ERC20 $FAU tokens
+
+The user will need to set the gas price manually through MetaMask in this case. 
+
+Note that you will need Goerli ETH and $FAU tokens to complete the example transaction. You can mint the $FAU tokens at https://erc20faucet.com/. A google search for "goerli eth faucet" should send you to several viable goerli eth faucet options.
 
 After the user confirms this transaction in HyperPlay, this will return a transaction hash similar to 0x1b8368d5b67a914a49c76984776849ee3c56a4ac28c92d98103ef18e7215ae2b 
 
