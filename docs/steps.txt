@@ -1,4 +1,5 @@
 cd docs
 doxygen
-make clean html
+make clean 
+make html
 output is in _build/html/index.html
