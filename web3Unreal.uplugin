@@ -25,9 +25,7 @@
 				"Linux",
 				"Mac"
 			],
-			"BlacklistPlatforms": [
-				"LinuxArm64"
-			]
+			"BlacklistPlatforms": []
 		}
 	]
 }
