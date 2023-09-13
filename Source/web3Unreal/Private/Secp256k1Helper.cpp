@@ -118,7 +118,7 @@ FString USecp256k1Helper::RecoverPublicAddressFromSignature(
 	secp256k1_ecdsa_recoverable_signature_parse_compact(ctx, &sig, serialized_signature, recId);
 
 	secp256k1_pubkey pubkeyThatSigned;
-	secp256k1_ecdsa_recover(ctx, &pubkeyThatSigned, &sig, msg_hash);
+	(void)secp256k1_ecdsa_recover(ctx, &pubkeyThatSigned, &sig, msg_hash);
 
 	//output the public address that signed
 	FString pubkeyFString = CalcFStringPublicAddress(ctx, pubkeyThatSigned);
@@ -136,7 +136,7 @@ bool USecp256k1Helper::GenerateRandomPrivateKey(secp256k1_context* ctx, unsigned
 		return false;
 	}
 	
-	secp256k1_context_randomize(ctx, randomize);
+	(void)secp256k1_context_randomize(ctx, randomize);
 
 	/*** Key Generation ***/
 

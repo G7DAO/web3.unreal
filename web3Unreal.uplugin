@@ -14,7 +14,7 @@
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
-	"EngineVersion": "5.2.1",
+	"EngineVersion": "5.3.0",
 	"Modules": [
 		{
 			"Name": "web3Unreal",

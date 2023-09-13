@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2023 Game 7 DAO Ltd. All Rights Reserved.
 #pragma once
 
-#include "HTTP/Public/Interfaces/IHttpRequest.h"
+#include "Interfaces/IHttpRequest.h"
 #include "Serialization/JsonWriter.h"
 #include "Policies/CondensedJsonPrintPolicy.h"
 #include "Dom/JsonObject.h"
