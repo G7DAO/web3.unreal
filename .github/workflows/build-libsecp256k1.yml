@@ -18,9 +18,19 @@ jobs:
         run: git clone https://github.com/bitcoin-core/secp256k1.git
       - name: autogen
         run: ./autogen.sh
+        working-directory: ./secp256k1
       - name: configure
-        run: ./configure
+        run: ./configure --enable-module-ecdh --enable-module-recovery
+        working-directory: ./secp256k1
       - name: build with cmake
         run: make
+        working-directory: ./secp256k1
       - name: run the test suite
         run: make check
+        working-directory: ./secp256k1
+      - name: Upload libsecp256k1.a for x86_64
+        uses: actions/upload-artifact@v3
+        with:
+          name: libsecp256k1_mac_x86_64.a
+          path: secp256k1/.libs/libsecp256k1.a
+          retention-days: 14
