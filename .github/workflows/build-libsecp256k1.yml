@@ -10,3 +10,17 @@ jobs:
     steps:
       - name: check arch
         run: uname -a
+      - name: Reconfigure git to use HTTP authentication
+        run: >
+          git config --global url."https://github.com/".insteadOf
+          ssh://git@github.com/
+      - name: Checkout flathub repository.
+        run: git clone https://github.com/bitcoin-core/secp256k1.git
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure
+      - name: build with cmake
+        run: make
+      - name: run the test suite
+        run: make check
