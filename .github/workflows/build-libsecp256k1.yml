@@ -1,0 +1,12 @@
+name: Build libsecp256k1 for mac
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-mac:
+    name: 'Build Mac'
+    runs-on: macos-latest
+    steps:
+      - name: check arch
+        run: uname -a
