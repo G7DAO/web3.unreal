@@ -16,6 +16,8 @@ jobs:
           ssh://git@github.com/
       - name: Checkout flathub repository.
         run: git clone https://github.com/bitcoin-core/secp256k1.git
+      - name: Install automake dep
+        run: brew install automake
       - name: autogen
         run: ./autogen.sh
         working-directory: ./secp256k1
