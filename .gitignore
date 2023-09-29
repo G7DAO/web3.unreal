@@ -31,6 +31,8 @@ Plugins/Developer/RiderLink/
 *.lib
 !**/libsecp256k1.a
 !**/libsecp256k1.lib
+!**/libsecp256k1_mac_arm64.a
+!**/libsecp256k1_mac_x86_64.a
 
 # Executables
 *.exe
