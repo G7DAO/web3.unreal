@@ -4,8 +4,8 @@ web3.unreal is the first plugin to bring true web3 functionality to desktop game
 
 This project is free and open source. It will continue to evolve to fit your needs.
 
-[<img alt="Discord" src="https://img.shields.io/discord/593655374469660673.svg?style=for-the-badge&label=Discord&logo=discord" height="20">](https://discord.gg/Vx4ky6ZbAK)
-[<img alt="Twitter" src="https://img.shields.io/twitter/follow/espadrine.svg?style=for-the-badge&label=Twitter&color=1DA1F2" height="20">](https://twitter.com/HyperPlayGaming)
+[<img alt="Discord" src="https://img.shields.io/discord/593655374469660673.svg?style=for-the-badge&label=Discord&logo=discord" height="20">](https://discord.com/invite/hyperplay)
+[<img alt="Twitter" src="https://img.shields.io/twitter/follow/espadrine.svg?style=for-the-badge&label=Twitter&color=1DA1F2" height="20">](https://x.com/HyperPlayGaming)
 
 ## Documentation
 
